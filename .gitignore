@@ -1,0 +1,8 @@
+node_modules/
+dist*/
+.runtime/
+qa/*.png
+qa/*.pdf
+qa/*.json
+slides-export.pdf
+*.log

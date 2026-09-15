@@ -1,0 +1,25 @@
+{
+  "purpose": "Illustrative food artwork, not measured calibration or experimental data.",
+  "mode": "original generation",
+  "assets": [
+    {
+      "file": "cookie-references.png",
+      "prompt": "Use case: product-mockup. Create one wide clean editorial food photograph for a presentation: exactly four separate round chocolate-chip cookies, same size and recipe, aligned in one horizontal row with equal spacing, directly overhead. The four cookies have strongly different browning, left to right: pale underbaked cream, light golden, medium toasted amber, very dark brown almost burnt. Crisp appetizing cookie textures, a gently humorous exaggerated comparison, minimal soft contact shadows, matte very light warm gray background (#f7f8f5), no plate, no props, no labels, no text, no logos. Each cookie fits fully within its own quarter of the frame; sufficient empty margin above and below. Landscape 3:1 composition. This is an illustrative comparison image, not measured scientific data."
+    },
+    {
+      "file": "oven.png",
+      "prompt": "Use case: illustration-story. Asset type: large slide illustration on pale warm gray #f7f8f5. Primary request: a stylish gently playful editorial illustration of a freestanding baking oven viewed straight on, door open, one standardized round chocolate-chip cookie on a small baking tray entering the oven. The digital temperature display has visibly broken dark segments and no readable temperature. Warm subtle orange interior glow, brushed charcoal metal, minimal clean soft 3D illustration with realistic texture, crisp legible silhouette. Oven centered and fills most of a square image, isolated on the flat pale background, no kitchen scene, no baker, no extra props, no words, no numbers, no labels, no logo. All temperature and time labels will be placed in the slide as editable text."
+    },
+    {
+      "file": "pumpkin-soup-oil.png",
+      "prompt": "Use case: product-mockup. Asset type: large editorial food photograph for an Austrian presentation. A beautiful large ceramic bowl of vivid orange pumpkin soup next to a dark green glass bottle of Styrian pumpkin seed oil, with a thin dark green oil stream being poured into the soup and an elegant deep green swirl on the orange surface. Pumpkins or a small cut pumpkin segment may sit behind the bowl, with a few pumpkin seeds nearby. Close three-quarter overhead food photography, soft natural studio lighting, rich realistic food texture, matte pale warm gray #f7f8f5 background, minimal composition, no people or hands. Landscape 3:2 composition with the bowl dominant. Bottle has no lettering, no brands, no text, no logos. Attractive orange/deep green contrast, no salt, no tasting or voting. This is an illustrative food scene, not empirical data."
+    }
+  ],
+  "responses": {
+    "cookie": "Assumed B(T)=1/(1+exp(-(T-180)/15)), 140–220 °C; fixed recipe and five-minute bake.",
+    "pumpkin": "Assumed darkness A(s)=0.15+0.7s, s in [0,1] relative units; fixed recipe, mixing and illumination.",
+    "ice": "Assumed remaining fraction M(T)=0.95-0.03T, 0–30 °C; ten-minute exposure; retrieved cube side 55/78 gives volume fraction about 0.35.",
+    "echo": "Round-trip delay Δt=2d/c; known homogeneous propagation speed.",
+    "shadow": "L=h/tan α; level ground, vertical object, known sun elevation 0<α<π/2. Diagram α=45°, h=L."
+  }
+}
