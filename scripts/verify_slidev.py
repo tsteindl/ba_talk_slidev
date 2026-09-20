@@ -93,4 +93,4 @@ print(json.dumps({
     "errors": report["errors"],
     "external_requests": report["external_requests"],
 }, indent=2))
-raise SystemExit(bool(failures or report["errors"] or report["external_requests"] or report["slide_count"] != 52))
+raise SystemExit(bool(failures or report["errors"] or report["external_requests"] or report["slide_count"] < 52))

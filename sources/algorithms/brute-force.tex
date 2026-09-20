@@ -1,0 +1,12 @@
+\begin{algorithm}
+    \caption{Estimate $\phi$ using ``Brute force''}
+    \label{alg:brute-force}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiBruteForce}{\textit{budget}, $\phi_\text{max}$}
+        \State $N_\text{min} \gets \left\lfloor \frac {\pi} {2 \phi_\text{max}} \right\rfloor$
+        \State $\textit{m} \gets \lfloor \textit{budget} / N_\text{min}\rfloor$
+        \State $\hat \phi \gets \Call{Simulate}{N_\text{min}, m}$
+        \State \Return $\hat\phi$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

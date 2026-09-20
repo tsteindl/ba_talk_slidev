@@ -1,0 +1,13 @@
+\begin{algorithm}
+    \caption{Simulate $\hat \phi$ using the maximally entangled protocol}
+    \label{alg:simulate}
+    \begin{algorithmic}
+        \Procedure{Simulate}{\textit{$N$}, \textit{$m$}}
+        \State Run the maximally entangled quantum metrology circuit with $N$ qubits
+        independently \textit{$m$} times and record the outcomes $\{o_i\}_{i=1}^m$
+        \State $\hat p_0 \gets$ fraction of all-zero outcomes in $\{o_i\}_{i=1}^m$
+        \State $\hat\phi \gets \frac 1 N \arccos(\sqrt{\hat p_0})$
+        \State \Return $\hat\phi$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

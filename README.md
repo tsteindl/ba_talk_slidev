@@ -77,7 +77,8 @@ The included GitHub Actions workflow runs `npm ci` and `npm run build` on Ubuntu
 - `slides-main.md` controls the working deck and slide order.
 - `pages/main.md` contains the original main-talk titles and notes.
 - `pages/estimator-derivation.md` contains the click-through estimator derivation.
-- `pages/supplementary.md` contains all backup slides.
+- `pages/supplementary.md` contains the hand-designed overview and theory backup slides.
+- `pages/generated-supplementary.md` is generated from the shared algorithm files, generated tables, and thesis figures.
 - `components/EstimatorStory.vue` draws and animates the estimator pipeline.
 - `src/talk-core.js` contains the more elaborate deterministic figures.
 - `styles/index.css` controls the visual system.
@@ -111,9 +112,10 @@ Then return to this repository and run:
 
 ```sh
 python scripts/copy_supplementary_sources.py
+npm run supplementary:generate
 ```
 
-The committed source excerpts make the presentation reproducible on the tower even when the thesis repository is not checked out there.
+The thesis imports its pseudocode from `thesis/algorithms/*.tex`; the sync script copies those exact files. Every table slide is parsed from the `.tex` files emitted by `ba_thesis_sim/analysis/thesis_tables.py`. Do not edit the generated slide page by hand. The committed source snapshots make the presentation reproducible on the tower even when the thesis repository is not checked out there.
 
 ## Citations and references
 

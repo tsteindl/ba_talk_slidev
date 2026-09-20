@@ -1,0 +1,57 @@
+\begin{algorithm}
+    \caption{Estimate $\phi$ using Linear Search}
+    \label{alg:linear-search}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiLinearSearch}{\textit{budget}, $\phi_\text{min}, \phi_\text{max}, \textit{m}', \textit{l}, \textit{inc}, \textit{s}, \textit{w}$}
+        \State $N_\text{max} \gets \left\lfloor\frac {\pi} {2 \phi_\text{min}}\right\rfloor,
+            \qquad N_\text{min} \gets \left\lfloor\frac{\pi} {2\phi_\text{max}}\right\rfloor$
+        \State $N\gets N_\text{min}$
+        \State $\bar \phi \gets 0,
+            \qquad i \gets 0,
+            \qquad B_\text{used} \gets 0$
+        \Comment{Initialize window mean, counter variable}
+        \State Initialize empty list $\hat\phi_\text{list}$
+
+        \While {$B_\text{used} + m' N \leq \textit{budget}$}
+        \Comment{A probe that does not fit is not taken}
+        \State $\hat \phi \gets \Call{Simulate}{N, \textit{m}'},
+            \qquad B_\text{used} \gets B_\text{used} + m' N$
+
+        \State Append $\hat\phi$ to $\hat\phi_\text{list}$
+
+        \If {$w = 0$}
+        \State $\bar\phi' \gets$ mean of all entries of $\hat\phi_\text{list}$
+        \Else
+        \State $\bar\phi' \gets$ mean of the last $\min(w, |\hat\phi_\text{list}|)$ entries of $\hat\phi_\text{list}$
+        \EndIf
+        \If {$\bar \phi' < \bar \phi$}
+        \State $i \gets i + 1$ \Comment{Update counter variable}
+        \Else
+        \State $i \gets 0$
+        \EndIf
+
+        \State $\bar \phi \gets \bar \phi'$
+        \If {$i \geq l$} \Comment{The window mean has decreased $l$ times in a row}
+        \State $N \gets N - l\cdot\textit{inc}$
+        \Comment{Discard the $l$ probes that triggered the stopping rule} % CHANGED
+        \State \textbf{break}
+        \ElsIf {$N \geq N_\text{max}$ \textbf{or} $B_\text{used} \geq \textit{budget}$}
+        \State \textbf{break}
+        \Else
+        \State $N \gets \min(N + \textit{inc},N_\text{max})$
+        \Comment{Increment without leaving the admissible interval}
+        \EndIf
+        \EndWhile
+
+        \State
+        $N^* \gets \max(1,\, N - s)$
+        \Comment{Reduce $N$ by safeguard to avoid overshooting} % CHANGED
+
+        \State $m \gets \lfloor (\textit{budget} - B_\text{used}) / N^*\rfloor$
+        \Comment{Shots that exhaust remaining budget}
+        \State $\hat \phi \gets \Call{Simulate}{N^*, m}$
+
+        \State \Return $\hat\phi$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

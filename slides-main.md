@@ -33,5 +33,9 @@ src: ./pages/supplementary.md
 ---
 
 ---
+src: ./pages/generated-supplementary.md
+---
+
+---
 src: ./pages/references.generated.md
 ---

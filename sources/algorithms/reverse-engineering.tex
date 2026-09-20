@@ -1,0 +1,28 @@
+\begin{algorithm}
+    \caption{Estimate $\phi$ by ``Reverse engineering'' $N$}
+    \label{alg:reverse-engineering}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiReverseEngineer}{\textit{budget}, $\phi_\text{min}, \phi_\text{max}, \textit{m}', \epsilon$}
+        \State $N_\text{min} \gets \left\lfloor\frac{\pi}{2 \phi_\text{max}}\right\rfloor,
+            \qquad N_\text{max} \gets \left\lfloor\frac{\pi}{2 \phi_\text{min}}\right\rfloor$
+
+        % \State $\hat\phi_0 \gets 0,\qquad B_\text{used}\gets 0$
+        % \While{$\hat\phi_0=0$ \textbf{and} $B_\text{used}+m'N_\text{min}\leq\textit{budget}$}
+        \State $\hat \phi_0 \gets \Call{Simulate}{N_\text{min}, \textit{m}'},
+            \qquad B_\text{used} \gets m' N_\text{min}$
+        % \EndWhile
+        \State $\sigma_0^2 \gets \frac{1}{4m'N_\text{min}^2}$
+
+        \State $B_\text{rem} \gets \textit{budget} - B_\text{used}$
+        \State $N^* \gets \Call{StatisticalSafeguard}{B_\text{rem}, N_\text{min}, N_\text{max}, \epsilon, \hat\phi_0, \sigma_0^2, \phi_\text{min}, \phi_\text{max}}$
+
+
+        \State $m \gets \lfloor B_\text{rem} / N^*\rfloor$
+        \Comment{Shots that exhaust remaining budget}
+        \State $\hat \phi \gets \Call{Simulate}{N^*, \textit{m}}$
+
+        \State \Return $\hat\phi$
+
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
