@@ -78,7 +78,7 @@ The included GitHub Actions workflow runs `npm ci` and `npm run build` on Ubuntu
 - `pages/main.md` contains the original main-talk titles and notes.
 - `pages/estimator-derivation.md` contains the click-through estimator derivation.
 - `pages/supplementary.md` contains the hand-designed overview and theory backup slides.
-- `pages/generated-supplementary.md` is generated from the shared algorithm files, generated tables, and thesis figures.
+- `pages/generated-supplementary.md` is generated from LaTeX-rendered thesis crops and thesis figures.
 - `components/EstimatorStory.vue` draws and animates the estimator pipeline.
 - `src/talk-core.js` contains the more elaborate deterministic figures.
 - `styles/index.css` controls the visual system.
@@ -112,10 +112,11 @@ Then return to this repository and run:
 
 ```sh
 python scripts/copy_supplementary_sources.py
+python scripts/render_backup_assets.py
 npm run supplementary:generate
 ```
 
-The thesis imports its pseudocode from `thesis/algorithms/*.tex`; the sync script copies those exact files. Every table slide is parsed from the `.tex` files emitted by `ba_thesis_sim/analysis/thesis_tables.py`. Do not edit the generated slide page by hand. The committed source snapshots make the presentation reproducible on the tower even when the thesis repository is not checked out there.
+Rebuild `thesis/main-thesis.pdf` with the normal thesis LaTeX pipeline before running these commands. The renderer locates every algorithm and table caption in that PDF, crops the compiled output, and fails if an expected caption is missing or ambiguous. Slidev displays those crops directly; it does not reinterpret the pseudocode or reconstruct the tables. Do not edit the generated slide page or crop images by hand. The committed assets make the presentation reproducible on the tower even when the thesis repository is not checked out there.
 
 ## Citations and references
 

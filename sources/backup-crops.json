@@ -1,0 +1,140 @@
+[
+  {
+    "kind": "algorithm",
+    "file": "algorithm-01.png",
+    "anchor": "Algorithm 1 Simulation",
+    "thesis_page": 18
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-02.png",
+    "anchor": "Algorithm 2 Simulate",
+    "thesis_page": 21
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-03.png",
+    "anchor": "Algorithm 3 Estimate",
+    "thesis_page": 22
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-04a.png",
+    "anchor": "Algorithm 4 Estimate",
+    "thesis_page": 24
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-04b.png",
+    "anchor": "Algorithm 4 Estimate",
+    "thesis_page": 24
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-05.png",
+    "anchor": "Algorithm 5 Statistical",
+    "thesis_page": 29
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-06a.png",
+    "anchor": "Algorithm 6 Simulate",
+    "thesis_page": 30
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-06b.png",
+    "anchor": "Algorithm 6 Simulate",
+    "thesis_page": 30
+  },
+  {
+    "kind": "algorithm",
+    "file": "algorithm-07.png",
+    "anchor": "Algorithm 7 Estimate",
+    "thesis_page": 31
+  },
+  {
+    "kind": "table",
+    "file": "table-03-01.png",
+    "anchor": "Table 3.1:",
+    "thesis_page": 26
+  },
+  {
+    "kind": "table",
+    "file": "table-04-01.png",
+    "anchor": "Table 4.1:",
+    "thesis_page": 33
+  },
+  {
+    "kind": "table",
+    "file": "table-04-02.png",
+    "anchor": "Table 4.2:",
+    "thesis_page": 34
+  },
+  {
+    "kind": "table",
+    "file": "table-04-03.png",
+    "anchor": "Table 4.3:",
+    "thesis_page": 34
+  },
+  {
+    "kind": "table",
+    "file": "table-04-04.png",
+    "anchor": "Table 4.4:",
+    "thesis_page": 36
+  },
+  {
+    "kind": "table",
+    "file": "table-04-05.png",
+    "anchor": "Table 4.5:",
+    "thesis_page": 38
+  },
+  {
+    "kind": "table",
+    "file": "table-04-06.png",
+    "anchor": "Table 4.6:",
+    "thesis_page": 39
+  },
+  {
+    "kind": "table",
+    "file": "table-b-01a.png",
+    "anchor": "Table B.1:",
+    "thesis_page": 53
+  },
+  {
+    "kind": "table",
+    "file": "table-b-01b.png",
+    "anchor": "Table B.1:",
+    "thesis_page": 53
+  },
+  {
+    "kind": "table",
+    "file": "table-b-02a.png",
+    "anchor": "Table B.2:",
+    "thesis_page": 54
+  },
+  {
+    "kind": "table",
+    "file": "table-b-02b.png",
+    "anchor": "Table B.2:",
+    "thesis_page": 54
+  },
+  {
+    "kind": "table",
+    "file": "table-b-03.png",
+    "anchor": "Table B.3:",
+    "thesis_page": 55
+  },
+  {
+    "kind": "table",
+    "file": "table-c-01.png",
+    "anchor": "Table C.1:",
+    "thesis_page": 56
+  },
+  {
+    "kind": "table",
+    "file": "table-c-02.png",
+    "anchor": "Table C.2:",
+    "thesis_page": 56
+  }
+]
