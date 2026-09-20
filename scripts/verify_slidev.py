@@ -49,7 +49,7 @@ with sync_playwright() as playwright:
               if (!slide || !layout) return { number, missing: true }
               const box = layout.getBoundingClientRect()
               const bad = []
-              for (const el of layout.querySelectorAll('h1,h2,p,img,table,.talk-body > *,.derivation > *,.estimator-story > *,.theorem-box,.algorithm-flow,.algorithm-steps')) {
+              for (const el of layout.querySelectorAll('h1,h2,p,img,table,.talk-body > *,.derivation > *,.estimator-story > *,.theorem-box,.algorithm-flow,.algorithm-steps,.slide-citations,.reference-entry')) {
                 const style = getComputedStyle(el)
                 if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) continue
                 const rect = el.getBoundingClientRect()
@@ -93,4 +93,4 @@ print(json.dumps({
     "errors": report["errors"],
     "external_requests": report["external_requests"],
 }, indent=2))
-raise SystemExit(bool(failures or report["errors"] or report["external_requests"] or report["slide_count"] != 51))
+raise SystemExit(bool(failures or report["errors"] or report["external_requests"] or report["slide_count"] != 52))

@@ -5,3 +5,5 @@
 - `generated-tables/`: output of `ba_thesis_sim/analysis/thesis_tables.py` using the current result CSVs.
 
 Run `scripts/copy_supplementary_sources.py` from the full thesis workspace after regenerating tables.
+
+`references.bib` is a generated snapshot of `thesis/references.bib`. Refresh it with `npm run refs:sync`; do not edit it independently.

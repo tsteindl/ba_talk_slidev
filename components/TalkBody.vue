@@ -1,6 +1,7 @@
 <script setup>
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import katex from 'katex'
+import SlideCite from './SlideCite.vue'
 import { main, m, eq, states, svg, chart, text, line, circle, pipeline, ink, teal, blue, gray } from '../src/talk-core.js'
 import { buildOpeningModules } from '../src/openings.js'
 
@@ -44,6 +45,7 @@ watch(()=>[props.clicks,props.number,props.module,props.index],()=>nextTick(upda
     <div v-if="slide.section" class="folio">{{ String(page).padStart(2,'0') }}</div>
     <div class="talk-content" v-html="slide.body"></div>
     <div v-if="slide.source" class="source" v-html="slide.source"></div>
+    <SlideCite v-if="!module" :id="`main-${number}`" />
     <div v-if="memory" class="memory" v-html="memory"></div>
     <div v-if="scenario" class="scenario" v-html="scenario"></div>
   </div>

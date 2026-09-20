@@ -83,6 +83,8 @@ The included GitHub Actions workflow runs `npm ci` and `npm run build` on Ubuntu
 - `styles/index.css` controls the visual system.
 - `openings/*.md` contains the optional opening modules.
 - `sources/` records the exact thesis LaTeX and generated-table provenance used by the backup slides.
+- `citations.json` maps stable slide IDs to keys from the thesis bibliography.
+- `sources/references.bib` is a generated snapshot of `thesis/references.bib`; do not edit it separately.
 
 A slide is separated by `---`. Ordinary Markdown works directly; Vue components are used for diagrams and controlled animations. Presenter notes go in an HTML comment at the end of a slide:
 
@@ -112,6 +114,18 @@ python scripts/copy_supplementary_sources.py
 ```
 
 The committed source excerpts make the presentation reproducible on the tower even when the thesis repository is not checked out there.
+
+## Citations and references
+
+The thesis bibliography remains the source of truth. In the full thesis workspace, synchronize it with:
+
+```sh
+npm run refs:sync
+```
+
+This copies `thesis/references.bib` into the portable talk repository and regenerates both the compact slide citations and the final references slide. To cite a source on another slide, add its existing BibTeX key to the corresponding stable slide ID in `citations.json`. `npm start`, `npm run start:local`, `npm run build`, and `npm run export` regenerate the presentation artifacts automatically.
+
+The generated files `src/citations.generated.js` and `pages/references.generated.md` must not be edited by hand. If a bibliographic record needs correction, correct it once in `thesis/references.bib` and run `npm run refs:sync` again.
 
 ## Build
 

@@ -6,6 +6,8 @@ clicks: 4
 
 <EstimatorStory :clicks="$clicks" />
 
+<SlideCite id="derivation-pipeline" />
+
 <!--
 Move through the pipeline as one continuous process. The circuit is a compact one-qubit building block, not a basic-gate tutorial. One outcome is random; repeated outcomes estimate a response probability; only then do we invert. The animation is deterministic and click-driven. [Sources] thesis/02-theory.tex, especially the preliminaries and Eqs. for the single-qubit response.
 -->
@@ -22,6 +24,8 @@ clicks: 3
   <div v-click="2" class="bit-readout"><MathEq tex="0\;1\;0\;0\;1\;\ldots\quad\Longrightarrow\quad\hat p_0=\#0/m" /></div>
   <div v-click="3" class="derivation-answer"><MathEq tex="\hat\phi=\arccos\sqrt{\hat p_0}" /><small><MathEq tex="0\leq\phi\leq\pi/2" /></small></div>
 </div>
+
+<SlideCite id="derivation-one" />
 
 <!--
 For U(phi)=exp(i phi Z), the H-U-H circuit gives p0=cos²(phi). Repetitions estimate p0. On the monotone branch zero to pi/2, invert to obtain phi_hat. This establishes the estimator logic before changing the probe architecture. [Sources] thesis/02-theory.tex, Sec. 2.1 and the N=1 case of Eqs. (separable probability and estimator).
@@ -40,6 +44,8 @@ clicks: 2
     <div v-click="2" class="derivation-answer"><MathEq tex="\hat\phi_{\rm sep}=\arccos\!\left(\hat p_{\rm sep}(0^N)^{1/(2N)}\right)" /></div>
   </div>
 </div>
+
+<SlideCite id="derivation-separable" />
 
 <!--
 The N qubits are independent. The probability that all N read out zero is the product of N identical single-qubit probabilities. Inverting this product response gives the separable estimator. Do not suggest that N is circuit depth; it is the number of phase-gate uses, here distributed across N qubits. [Sources] thesis/fig/n qubit multiple uses.png; thesis/02-theory.tex, Sec. 2.2, Eqs. prob-zero-sep and est-sep.
@@ -60,6 +66,8 @@ clicks: 3
   </div>
 </div>
 
+<SlideCite id="derivation-ghz" />
+
 <!--
 The GHZ components acquire phases plus and minus N phi. Their overlap is cos(N phi), so the all-zero probability after decoding is cos²(N phi). On the identifiable branch 0 <= N phi <= pi/2, inversion gives the estimator used throughout the adaptive study. The ideal sequential protocol has the same likelihood, but different physical requirements. [Sources] thesis/fig/entangled circuit.png; thesis/02-theory.tex, Secs. 2.3–2.4, Eqs. prob-zero-ent and est-ent.
 -->
@@ -77,6 +85,8 @@ clicks: 2
     <div v-click="2" class="comparison-label accent">GHZ / sequential<br><b><MathEq tex="\cos^2(N\phi)" /></b><small>faster response · repeated branches</small></div>
   </div>
 </div>
+
+<SlideCite id="derivation-comparison" />
 
 <!--
 The thesis figure compares N=10. The entangled response changes much faster near the origin, while periodic branches repeat. This is the tension that motivates choosing N adaptively: local sensitivity improves, but branch identifiability is lost if N is too large. The figure was adapted in the thesis from Kofler; retain that source attribution if this slide remains. [Sources] thesis/fig/proba_comparison.png; thesis/02-theory.tex, comparison of protocols; Kofler, Quantum Information and Quantum Metrology as cited by the thesis.
