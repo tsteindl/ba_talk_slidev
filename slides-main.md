@@ -13,6 +13,7 @@ src: ./pages/title.md
 
 ---
 src: ./openings/ice.md
+src: ./openings/sun-angle.md
 ---
 
 ---
@@ -29,4 +30,8 @@ src: ./pages/main.md#2-22
 
 ---
 src: ./pages/supplementary.md
+---
+
+---
+src: ./pages/references.generated.md
 ---
