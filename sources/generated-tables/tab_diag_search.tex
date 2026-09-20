@@ -1,0 +1,39 @@
+\begin{table}[ht]
+\centering
+\small
+\caption{Exploration quality, cost, and overshoot-detector errors, aggregated over the 106 informative operating points. $N_{\mathrm{guess}}$ is recorded before the safeguard and $N_{\mathrm{opt}}=\left\lfloor\pi/(2\phi)\right\rfloor$ is the largest non-aliasing phase-gate count. False-alarm and miss rates are trial-level: they indicate whether at least one such event occurred during a run. Reverse engineering has no overshoot detector, so these rates are not applicable.}
+\label{tab:diag-search}
+\begin{tabular}{lcccccc}
+\toprule
+Algorithm
+& \makecell{Median \\ $N_{\mathrm{guess}}/N_{\mathrm{opt}}$}
+& \makecell{Within \\ $10\%$}
+& \makecell{Guess \\ overshoot}
+& \makecell{Probes \\ per trial}
+& \makecell{Median expl. \\ budget share}
+& \makecell{False alarm \\ / miss} \\
+\midrule
+A.~\ref{alg:linear-search}: LS
+& 0.99
+& 61.8\%
+& 5.5\%
+& 28.9
+& 0.58\%
+& 61.7\% / 5.5\% \\
+A.~\ref{alg:binary-search}: BS
+& 0.90
+& 46.6\%
+& 5.6\%
+& 5.5
+& 2.41\%
+& 30.7\% / 5.6\% \\
+A.~\ref{alg:reverse-engineering}: RE
+& 1.00
+& 87.6\%
+& 23.9\%
+& 1.0
+& 0.77\%
+& -- \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,12 +1,13 @@
 {
-  "name": "institute-talk-slidev",
+  "name": "ba-talk-slidev",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "slidev slides-ice-expanded.md --open",
-    "main": "slidev --open",
-    "build": "slidev build",
-    "export": "slidev export",
+    "start": "slidev slides-main.md --host 127.0.0.1 --port 3030",
+    "start:local": "slidev slides-main.md --open",
+    "main": "slidev slides-main.md --open",
+    "build": "slidev build slides-main.md",
+    "export": "slidev export slides-main.md",
     "ice": "slidev slides-ice.md --open",
     "echo": "slidev slides-echo.md --open",
     "shadow": "slidev slides-shadow.md --open",
@@ -20,5 +21,8 @@
     "@slidev/cli": "52.19.2",
     "@slidev/theme-default": "0.25.0",
     "katex": "0.18.7"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

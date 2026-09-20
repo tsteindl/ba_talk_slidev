@@ -1,0 +1,199 @@
+% ---- alg:brute-force ----
+\begin{algorithm}
+    \caption{Estimate $\phi$ using ``Brute force''}
+    \label{alg:brute-force}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiBruteForce}{\textit{budget}, $\phi_\text{max}$}
+        \State $N_\text{min} \gets \left\lfloor \frac {\pi} {2 \phi_\text{max}} \right\rfloor$
+        \State $\textit{m} \gets \lfloor \textit{budget} / N_\text{min}\rfloor$
+        \State $\hat \phi \gets \Call{Simulate}{N_\text{min}, m}$
+        \State \Return $\hat\phi$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+% ---- alg:linear-search ----
+\begin{algorithm}
+    \caption{Estimate $\phi$ using Linear Search}
+    \label{alg:linear-search}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiLinearSearch}{\textit{budget}, $\phi_\text{min}, \phi_\text{max}, \textit{m}', \textit{l}, \textit{inc}, \textit{s}, \textit{w}$}
+        \State $N_\text{max} \gets \left\lfloor\frac {\pi} {2 \phi_\text{min}}\right\rfloor,
+            \qquad N_\text{min} \gets \left\lfloor\frac{\pi} {2\phi_\text{max}}\right\rfloor$
+        \State $N\gets N_\text{min}$
+        \State $\bar \phi \gets 0,
+            \qquad i \gets 0,
+            \qquad B_\text{used} \gets 0$
+        \Comment{Initialize window mean, counter variable}
+        \State Initialize empty list $\hat\phi_\text{list}$
+
+        \While {$B_\text{used} + m' N \leq \textit{budget}$}
+        \Comment{A probe that does not fit is not taken}
+        \State $\hat \phi \gets \Call{Simulate}{N, \textit{m}'},
+            \qquad B_\text{used} \gets B_\text{used} + m' N$
+
+        \State Append $\hat\phi$ to $\hat\phi_\text{list}$
+
+        \If {$w = 0$}
+        \State $\bar\phi' \gets$ mean of all entries of $\hat\phi_\text{list}$
+        \Else
+        \State $\bar\phi' \gets$ mean of the last $\min(w, |\hat\phi_\text{list}|)$ entries of $\hat\phi_\text{list}$
+        \EndIf
+        \If {$\bar \phi' < \bar \phi$}
+        \State $i \gets i + 1$ \Comment{Update counter variable}
+        \Else
+        \State $i \gets 0$
+        \EndIf
+
+        \State $\bar \phi \gets \bar \phi'$
+        \If {$i \geq l$} \Comment{The window mean has decreased $l$ times in a row}
+        \State $N \gets N - l\cdot\textit{inc}$
+        \Comment{Discard the $l$ probes that triggered the stopping rule} % CHANGED
+        \State \textbf{break}
+        \ElsIf {$N \geq N_\text{max}$ \textbf{or} $B_\text{used} \geq \textit{budget}$}
+        \State \textbf{break}
+        \Else
+        \State $N \gets \min(N + \textit{inc},N_\text{max})$
+        \Comment{Increment without leaving the admissible interval}
+        \EndIf
+        \EndWhile
+
+        \State
+        $N^* \gets \max(1,\, N - s)$
+        \Comment{Reduce $N$ by safeguard to avoid overshooting} % CHANGED
+
+        \State $m \gets \lfloor (\textit{budget} - B_\text{used}) / N^*\rfloor$
+        \Comment{Shots that exhaust remaining budget}
+        \State $\hat \phi \gets \Call{Simulate}{N^*, m}$
+
+        \State \Return $\hat\phi$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+% ---- alg:stat-safeguard-subroutine ----
+\begin{algorithm}
+    \caption{Statistical safeguard subroutine}
+    \label{alg:stat-safeguard-subroutine}
+    \begin{algorithmic}
+        \Procedure{StatisticalSafeguard}
+        {$B, N_{\text{min}}, N_{\text{max}},
+                \epsilon, \hat\phi_p, \sigma_p^2,
+                \phi_{\text{min}}, \phi_{\text{max}}$}
+        \State $N^* \gets N_\text{min},
+            \qquad P^* \gets 0$
+
+        \For{$N' = N_\text{min}, \ldots, N_{\text{max}}$}
+        \State $m \gets \left\lfloor B / N' \right\rfloor$
+        \State $\sigma \gets \dfrac{1}{2N'\sqrt{m}}$
+
+        \State $P_{\text{valid}}
+            \gets
+            F_{\hat\phi_p,\sigma_p^2;
+            [\phi_{\text{min}},\phi_{\text{max}}]}
+            \left(\dfrac{\pi}{2N'}\right)$
+
+        \State $P_{\text{acc}}
+            \gets
+            1 - 2\Phi\left(-\dfrac{\epsilon}{\sigma}\right)$
+
+        \State $P \gets P_{\text{valid}} \cdot P_{\text{acc}}$
+
+        \If{$P > P^*$}
+        \State $P^* \gets P,
+            \qquad N^* \gets N'$
+        \EndIf
+        \EndFor
+
+        \State \Return $N^*$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+% ---- alg:binary-search ----
+\begin{algorithm}
+    \caption{Simulate $\phi$ using Binary Search}
+    \label{alg:binary-search}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiBinarySearch}{\textit{budget}, $\phi_\text{min}, \phi_\text{max}, \textit{m}', \alpha, \epsilon$}
+        \State $N_\text{min} \gets \left\lfloor\frac{\pi}{2 \phi_\text{max}}\right\rfloor,
+            \qquad N_\text{max} \gets \left\lfloor\frac{\pi}{2 \phi_\text{min}}\right\rfloor$
+        \State $N\gets N_\text{min}$
+
+        \State $\hat \phi \gets \Call{Simulate}{N, m'},
+            \qquad B_\text{used} \gets m' N$
+
+        \State $\hat\phi_\text{acc} \gets \hat\phi,\qquad N_\text{acc} \gets N$ \Comment{Pilot: deepest probe not classified as an overshoot}
+
+        \State Initialize lower threshold $\phi_1$ such that $\mathbb{P}\!\left(\tilde\phi_N \leq \phi_1 \mid \hat\phi_\text{acc}\right)=\alpha$, using $\tilde\phi_N \mid \hat\phi_\text{acc} \sim \mathcal{N}\!\left(\hat\phi_\text{acc}, \tfrac{1}{4m'N^2}\right)$
+        \State
+
+        \State $L \gets N_\text{min},\qquad U \gets N_\text{max}$ \Comment{Lower and upper bound for $N$}
+        \State $N \gets N + \lfloor (U-N)/2 \rfloor$ \Comment{Update $N$ to midpoint of the set $\{N,\ldots, U\}$}
+
+        \Do
+        \State \textbf{if} the next probe does not fit in the remaining budget \textbf{then break}
+        \State $\hat \phi \gets \Call{Simulate}{N, \textit{m}'},
+            \qquad B_\text{used} \gets B_\text{used} + m' N$
+
+        %    \State Update budget used
+
+        \State $N_\text{old} \gets N$ \Comment{Temporary $N$}
+
+        \If {$\hat \phi < \phi_1$}
+        \State $N \gets N - \lfloor (N - L)/2 \rfloor$ \Comment{Update $N$ to midpoint of the set $\{L,\ldots, N\}$}
+        \State $U \gets N_\text{old}$ \Comment{Update upper bound for $N$}
+        \Else
+        \State $\hat\phi_\text{acc} \gets \hat\phi, \qquad N_\text{acc} \gets N_\text{old}$ \Comment{Sharper pilot}
+        \State $N \gets N + \lfloor (U - N) / 2 \rfloor$ \Comment{Update $N$ to midpoint of the set $\{N, \ldots, U\}$}
+        \State $L \gets N_\text{old}$ \Comment{Update lower bound for $N$}
+                \State
+                \State Recompute $\phi_1$ such that $\mathbb{P}\!\left(\tilde\phi_N \leq \phi_1 \mid \hat\phi_\text{acc}\right)=\alpha$, using $\tilde\phi_N \mid \hat\phi_\text{acc} \sim \mathcal{N}\!\left(\hat\phi_\text{acc}, \tfrac{1}{4m'N^2}\right)$
+        \EndIf
+
+        \doWhile {$N_\text{old} \neq N$}
+
+        \State
+        \State $\sigma_\text{acc}^2 \gets \frac{1}{4m'N_\text{acc}^2}$
+        \State $B_\text{rem} \gets \textit{budget} - B_\text{used}$
+        \State $N^* \gets \Call{StatisticalSafeguard}{B_\text{rem}, N_\text{min}, N_\text{max}, \epsilon, \hat\phi_\text{acc}, \sigma_\text{acc}^2, \phi_\text{min}, \phi_\text{max}}$
+
+        \State $m \gets \lfloor B_\text{rem} / N^*\rfloor$
+        \Comment{Calculate shots such that remaining budget is exhausted}
+        \State $\hat \phi \gets \Call{Simulate}{N^*, \textit{m}}$
+
+        \State \Return $\hat\phi$
+
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+% ---- alg:reverse-engineering ----
+\begin{algorithm}
+    \caption{Estimate $\phi$ by ``Reverse engineering'' $N$}
+    \label{alg:reverse-engineering}
+    \begin{algorithmic}
+        \Procedure{SimulatePhiReverseEngineer}{\textit{budget}, $\phi_\text{min}, \phi_\text{max}, \textit{m}', \epsilon$}
+        \State $N_\text{min} \gets \left\lfloor\frac{\pi}{2 \phi_\text{max}}\right\rfloor,
+            \qquad N_\text{max} \gets \left\lfloor\frac{\pi}{2 \phi_\text{min}}\right\rfloor$
+
+        % \State $\hat\phi_0 \gets 0,\qquad B_\text{used}\gets 0$
+        % \While{$\hat\phi_0=0$ \textbf{and} $B_\text{used}+m'N_\text{min}\leq\textit{budget}$}
+        \State $\hat \phi_0 \gets \Call{Simulate}{N_\text{min}, \textit{m}'},
+            \qquad B_\text{used} \gets m' N_\text{min}$
+        % \EndWhile
+        \State $\sigma_0^2 \gets \frac{1}{4m'N_\text{min}^2}$
+
+        \State $B_\text{rem} \gets \textit{budget} - B_\text{used}$
+        \State $N^* \gets \Call{StatisticalSafeguard}{B_\text{rem}, N_\text{min}, N_\text{max}, \epsilon, \hat\phi_0, \sigma_0^2, \phi_\text{min}, \phi_\text{max}}$
+
+
+        \State $m \gets \lfloor B_\text{rem} / N^*\rfloor$
+        \Comment{Shots that exhaust remaining budget}
+        \State $\hat \phi \gets \Call{Simulate}{N^*, \textit{m}}$
+
+        \State \Return $\hat\phi$
+
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

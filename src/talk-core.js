@@ -3,7 +3,7 @@ const ink = '#172d39', teal = '#007e80', blue = '#3566a6', red = '#bd414b', gray
 const m = tex => `<span class="math">${tex}</span>`;
 const eq = tex => `<div class="equation">${m(tex)}</div>`;
 const frag = (html, index, cls='') => `<div class="fragment ${cls}" data-fragment-index="${index}">${html}</div>`;
-const text = (x,y,t,color=ink,size=21,anchor='start') => `<text x="${x}" y="${y}" fill="${color}" style="fill:${color};font-size:${size}px" text-anchor="${anchor}">${String(t).replace(/(N|P|C|φ̂)_([A-Za-z]+)/g,'$1<tspan baseline-shift="sub" font-size="75%">$2</tspan>')}</text>`;
+const text = (x,y,t,color=ink,size=21,anchor='start') => `<text x="${x}" y="${y}" fill="${color}" style="fill:${color};font-size:${size}px" text-anchor="${anchor}">${String(t).replace(/(N|P|C)_([A-Za-z]+)/g,'$1<tspan baseline-shift="sub" font-size="75%">$2</tspan>')}</text>`;
 const line = (x1,y1,x2,y2,color=gray,dash=false,width=2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${width}" ${dash?'stroke-dasharray="8 7"':''}/>`;
 const circle = (x,y,color=teal,r=5) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}"/>`;
 function svg(body, cls='plot', label='Scientific figure') { return `<svg class="${cls}" viewBox="0 0 1050 350" role="img" aria-label="${label}">${body}</svg>`; }
@@ -25,8 +25,8 @@ function response(N,extended=false,guides=0) {
   if(extended) b+=`<rect x="${c.x(Math.PI/(2*N))}" y="30" width="${990-c.x(Math.PI/(2*N))}" height="260" fill="${red}" opacity=".07"/>`;
   b+=c.path(rows,'phi','p');
   if(guides>=1) { const phi=.05,p=Math.cos(N*phi)**2; b+=line(c.x(phi),c.y(0),c.x(phi),c.y(p),teal,true)+circle(c.x(phi),c.y(p),teal,7)+text(c.x(phi)+15,270,'φ = 0.05',teal,18); }
-  if(guides>=2) { const phat=D.bits.filter(v=>v===0).length/D.bits.length; b+=line(90,c.y(phat),990,c.y(phat),blue,true)+text(850,c.y(phat)-12,'p̂₀ = '+phat.toFixed(3),blue,19); }
-  if(guides>=3) { const phat=D.bits.filter(v=>v===0).length/D.bits.length,est=Math.acos(Math.sqrt(phat))/N; b+=line(c.x(est),c.y(phat),c.x(est),290,blue,true)+circle(c.x(est),c.y(phat),blue,7)+text(c.x(est)-10,250,'φ̂',blue,24,'end'); }
+  if(guides>=2) { const phat=D.bits.filter(v=>v===0).length/D.bits.length; b+=line(90,c.y(phat),990,c.y(phat),blue,true)+text(850,c.y(phat)-12,'estimated p₀ = '+phat.toFixed(3),blue,19); }
+  if(guides>=3) { const phat=D.bits.filter(v=>v===0).length/D.bits.length,est=Math.acos(Math.sqrt(phat))/N; b+=line(c.x(est),c.y(phat),c.x(est),290,blue,true)+circle(c.x(est),c.y(phat),blue,7)+text(c.x(est)-10,250,'estimated φ',blue,22,'end'); }
   if(guides===-1) { const a=.03,z=.033,pa=Math.cos(N*a)**2,pz=Math.cos(N*z)**2; b+=line(c.x(a),290,c.x(a),c.y(pa),blue,true)+line(c.x(z),290,c.x(z),c.y(pz),blue,true)+circle(c.x(a),c.y(pa),blue,6)+circle(c.x(z),c.y(pz),blue,6)+line(c.x(z)+20,c.y(pa),c.x(z)+20,c.y(pz),blue,false,3)+text(c.x(z)+35,(c.y(pa)+c.y(pz))/2+6,'Δp₀',blue,21); }
   return `<div class="response-view"><div class="response-formula">${m('p_0(\\phi)=\\cos^2('+N+'\\phi)')}</div>${svg(b,'plot',`Response p0 = cos squared N phi, N=${N}`)}</div>`;
 }
@@ -50,7 +50,7 @@ function pipeline(experiment='quantum experiment',hidden='\\phi',observations='0
 function outcomeBits(count=60) { return `<div class="outcomes">${D.bits.slice(0,count).map(v=>`<span class="bit ${v===0?'zero':''}">${v}</span>`).join('')}</div>`; }
 function estimatePlot(rows,{moving=false,overshoot=false,count=rows.length}={}) {
   const max=overshoot?60:Math.max(45,...rows.map(r=>r.N));
-  const c=chart({xmin:5,xmax:max,ymin:0,ymax:.08,xticks:overshoot?[5,15,31,45,60]:[5,15,25,35,45],yticks:[0,.02,.04,.06,.08],xlabel:'N · phase-gate uses',ylabel:'φ̂_N (rad)'});
+  const c=chart({xmin:5,xmax:max,ymin:0,ymax:.08,xticks:overshoot?[5,15,31,45,60]:[5,15,25,35,45],yticks:[0,.02,.04,.06,.08],xlabel:'N · phase-gate uses',ylabel:'estimated φ (rad)'});
   let b=c.body+line(90,c.y(.05),990,c.y(.05),gray,true)+text(800,c.y(.05)-9,'true φ = 0.05',gray,18);
   if(overshoot)b+=line(c.x(31),30,c.x(31),290,red,true)+text(c.x(31)+12,51,'N_opt = 31',red,20)+text(c.x(31)+12,78,'UNKNOWN TO THE ALGORITHM',red,15);
   rows.slice(0,count).forEach(r=>b+=circle(c.x(r.N),c.y(r.estimate??r.phi_hat),r.N>31?red:teal,4.3));
@@ -80,7 +80,7 @@ function resultsPlot() {
     else b+=`<path d="M${x},${y-9}l9,9l-9,9l-9,-9Z" fill="none" stroke="${gray}" stroke-width="2"/>`;
     b+=text(x+25,y+7,(100*+r.rate).toFixed(1)+'%',colors[key],26);
   });
-  b+=text(630,348,'successful runs · |φ̂ − φ| &lt; ε',gray,21,'middle');
+  b+=text(630,348,'successful runs · |estimate − φ| &lt; ε',gray,21,'middle');
   return svg(b,'plot','Fixed-budget success rates with 95 percent Wilson confidence intervals; oracle analytic');
 }
 function budgetsPlot() {
@@ -105,7 +105,7 @@ function classifier() {
   const rows=Array.from({length:250},(_,i)=>{const p=.032+.033*i/249;return {p,v:Math.exp(-.5*((p-.05)/.004)**2)};});
   const tail=rows.filter(r=>r.p<=.04342);
   let b=c.body+`<path d="M${c.x(.032)},290 ${tail.map(r=>`L${c.x(r.p)},${c.y(r.v)}`).join(' ')} L${c.x(tail.at(-1).p)},290Z" fill="${red}" opacity=".2"/>`+c.path(rows,'p','v',gray);
-  b+=line(c.x(.05),c.y(1),c.x(.05),290,gray,true)+text(c.x(.05),25,'φ̂_acc',ink,24,'middle')+circle(c.x(.048),c.y(.1),blue,8)+text(c.x(.048)+12,c.y(.2),'plausible noise',blue,22)+circle(c.x(.038),c.y(.1),red,8)+text(c.x(.038)-10,c.y(.3),'likely overshoot',red,22,'middle');
+  b+=line(c.x(.05),c.y(1),c.x(.05),290,gray,true)+text(c.x(.05),25,'accepted estimate',ink,20,'middle')+circle(c.x(.048),c.y(.1),blue,8)+text(c.x(.048)+12,c.y(.2),'plausible noise',blue,22)+circle(c.x(.038),c.y(.1),red,8)+text(c.x(.038)-10,c.y(.3),'likely overshoot',red,22,'middle');
   return svg(b,'plot','Illustrative 5 percent lower tail of Gaussian classifier, not guaranteed frequentist calibration');
 }
 const main=[];

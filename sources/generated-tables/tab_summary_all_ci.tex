@@ -1,0 +1,51 @@
+\begin{table}[ht]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\caption{Budget required to reach $90\%$ convergence for selected precision settings and prior intervals. Values are budgets in thousands; smaller values indicate a lower required budget. Brackets give 95\% bootstrap intervals.}
+\label{tab:summary-all-ci}
+\begin{tabular}{l c c c c}
+\toprule
+Algorithm
+& \makecell{Budget in thousands\\ ($90\%$ conv.) \\ $\epsilon={10^{-3}}$ \\ $\phi \sim \mathcal{U}(0.01,0.1)$}
+& \makecell{Budget in thousands\\ ($90\%$ conv.) \\ $\epsilon={10^{-4}}$ \\ $\phi \sim \mathcal{U}(0.01,0.1)$}
+& \makecell{Budget in thousands\\ ($90\%$ conv.) \\ $\epsilon={10^{-4}}$ \\ $\phi \sim \mathcal{U}(0.001,0.01)$}
+& \makecell{Budget in thousands\\ ($90\%$ conv.) \\ $\epsilon={10^{-4}}$ \\ $\phi \sim \mathcal{U}(0.001,0.1)$} \\
+\midrule
+A.~\ref{alg:brute-force}: BF
+& 45.9\hspace{0.45em}{\scriptsize [45.3, 46.5]}
+& 4{,}530\hspace{0.45em}{\scriptsize [4{,}460, 4{,}590]}
+& 441\hspace{0.45em}{\scriptsize [436, 447]}
+& 4{,}520\hspace{0.45em}{\scriptsize [4{,}460, 4{,}580]} \\
+A.~\ref{alg:linear-search}: LS
+& 35.5\hspace{0.45em}{\scriptsize [34.9, 36]}
+& 2{,}910\hspace{0.45em}{\scriptsize [2{,}860, 2{,}960]}
+& 325\hspace{0.45em}{\scriptsize [321, 329]}
+& 3{,}190\hspace{0.45em}{\scriptsize [3{,}150, 3{,}240]} \\
+A.~\ref{alg:binary-search}: BS
+& 32.4\hspace{0.45em}{\scriptsize [32, 32.9]}
+& 2{,}830\hspace{0.45em}{\scriptsize [2{,}800, 2{,}870]}
+& 334\hspace{0.45em}{\scriptsize [330, 338]}
+& 2{,}450\hspace{0.45em}{\scriptsize [2{,}420, 2{,}480]} \\
+A.~\ref{alg:reverse-engineering}: RE
+& 29.8\hspace{0.45em}{\scriptsize [29.2, 30.3]}
+& 2{,}600\hspace{0.45em}{\scriptsize [2{,}570, 2{,}630]}
+& 303\hspace{0.45em}{\scriptsize [298, 307]}
+& 2{,}450\hspace{0.45em}{\scriptsize [2{,}420, 2{,}480]} \\
+\midrule
+Sep. ($N=1$)
+& 680\hspace{0.45em}{\scriptsize [669, 691]}
+& 67{,}200\hspace{0.45em}{\scriptsize [66{,}300, 68{,}300]}
+& --
+& 67{,}300\hspace{0.45em}{\scriptsize [66{,}300, 68{,}500]} \\
+\midrule
+Oracle ($N_\text{opt}$)
+& 24.4
+& 2{,}442.3
+& 239.5
+& 2{,}283 \\
+\bottomrule
+\end{tabular}
+\\[2pt]
+\footnotesize Adaptive entries are de-biased: parameters are grid-tuned on seeds 42 and 43 and the frozen winner is re-validated on the independent seed 2024 at $R=50{,}000$ trials. The oracle value is evaluated deterministically using the large-$m$ normal approximation in Lemma~\ref{lemma:asymp-dist-est}, and thus carries no confidence interval.
+\end{table}

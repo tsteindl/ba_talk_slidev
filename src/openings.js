@@ -24,7 +24,7 @@ export function buildOpeningModules({m,eq,states,svg,chart,text,line,circle,pipe
     const p=conf.f(conf.value),xx=c.x(conf.value),yy=c.y(p);
     let b=c.body+c.path(rows,'x','y',teal)+text(985,14,'assumed response law',gray,17,'end');
     if(step>=1)b+=line(90,yy,xx,yy,blue,true)+circle(xx,yy,blue,7)+text(975,yy-14,'observed response',blue,20,'end');
-    if(step>=2)b+=line(xx,yy,xx,290,blue,true)+text(xx+15,270,kind==='pumpkin'?'ŝ':'T̂',blue,27);
+    if(step>=2)b+=line(xx,yy,xx,290,blue,true)+text(xx+15,270,kind==='pumpkin'?'estimated s':'estimated T',blue,22);
     return svg(b,'plot opening-calibration',`${conf.ylabel}: schematic monotone response with horizontal observation and vertical inverse mapping`).replace('viewBox="0 0 1050 350"','viewBox="0 -20 1050 390"');
   }
   function inversion(kind) { return states([0,1,2].map(step=>calibration({kind,step}))); }

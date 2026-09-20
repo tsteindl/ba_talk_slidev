@@ -8,7 +8,7 @@ from pathlib import Path
 from threading import Thread
 
 HERE = Path(__file__).resolve().parents[1]
-DIST = HERE / "dist-expanded"
+DIST = HERE / "dist"
 QA = HERE / "qa"
 QA.mkdir(exist_ok=True)
 os.environ["PLAYWRIGHT_BROWSERS_PATH"] = str(HERE.parent / "institute-talk-v1" / ".runtime" / "browsers")
@@ -49,7 +49,7 @@ with sync_playwright() as playwright:
               if (!slide || !layout) return { number, missing: true }
               const box = layout.getBoundingClientRect()
               const bad = []
-              for (const el of layout.querySelectorAll('h1,h2,p,img,.talk-body > *,.derivation > *,.estimator-story > *')) {
+              for (const el of layout.querySelectorAll('h1,h2,p,img,table,.talk-body > *,.derivation > *,.estimator-story > *,.theorem-box,.algorithm-flow,.algorithm-steps')) {
                 const style = getComputedStyle(el)
                 if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) continue
                 const rect = el.getBoundingClientRect()
@@ -93,4 +93,4 @@ print(json.dumps({
     "errors": report["errors"],
     "external_requests": report["external_requests"],
 }, indent=2))
-raise SystemExit(bool(failures or report["errors"] or report["external_requests"] or report["slide_count"] != 31))
+raise SystemExit(bool(failures or report["errors"] or report["external_requests"] or report["slide_count"] != 51))
