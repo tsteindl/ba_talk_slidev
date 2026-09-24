@@ -151,10 +151,11 @@ const fmt = n => n.toFixed(2)
       <circle :cx="xs(sweepPhi)" :cy="ys(sweepN)" r="8" class="runner" />
       <line :x1="xs(sweepPhi)" :y1="BOTTOM" :x2="xs(sweepPhi)" :y2="ys(sweepN)" class="runner-lead" />
       <line :x1="xs(sweepPhi)" :y1="ys(sweepN)" :x2="LEFT" :y2="ys(sweepN)" class="runner-lead" />
-      <text :x="515" :y="240" class="result-tag"
+<!--      <text :x="515" :y="240" class="result-tag"
             >every N from 15 to 157 is safe for <tspan font-style="italic">some</tspan> φ in the prior</text>
       <text :x="515" :y="268" class="result-tag muted-tag"
             >the true φ picks one point on this curve — we cannot see which</text>
+            -->
     </g>
   </svg>
 </template>

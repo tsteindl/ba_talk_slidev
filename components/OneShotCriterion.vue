@@ -112,7 +112,7 @@ const fmt = v => v.toFixed(4)
       <span v-if="stage < 2">pilot at <b>N₀ = N<sub>min</sub> = {{ N0 }}</b>, <b>m₀ = {{ M0 }}</b> shots ·
         each probe <b>m′ = {{ shots }}</b> shots · safe depth here is <b>N ≤ {{ N_OPT }}</b></span>
       <span v-else>reject when the probe lands below
-        φ₁ = φ̂<sub>p</sub> + Φ⁻¹(α) / (2N√m′), α = {{ ALPHA }}</span>
+        φ₁ = F⁻¹(α), for inverse CDF F⁻¹, α = {{ ALPHA }}</span>
     </p>
     <p v-if="caption" class="one-shot-caption">{{ caption }}</p>
   </div>

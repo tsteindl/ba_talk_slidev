@@ -54,7 +54,7 @@ const TRUE_PHI = D.binary.phi
         <text :x="(L + R) / 2" :y="B + 38" text-anchor="middle" class="axis-name">N, probed in order</text>
         <text :x="L - 10" :y="T + 4" text-anchor="end" class="axis-name">φ̂</text>
       </svg>
-      <p class="verdict">ordered in N — a falling mean means something</p>
+      <p class="verdict">ordered in N - a falling mean means something</p>
     </div>
 
     <div class="panel" :class="{ dim: stage < 1 }">
@@ -76,7 +76,7 @@ const TRUE_PHI = D.binary.phi
         <text :x="L - 10" :y="T + 4" text-anchor="end" class="axis-name">φ̂</text>
       </svg>
       <p class="verdict" :class="{ accent: stage >= 2 }">
-        <span v-if="stage < 2">N jumps around — consecutive probes are not ordered</span>
+        <span v-if="stage < 2">N jumps around - consecutive probes are not ordered</span>
         <span v-else>each probe judged <b>on its own</b>, against its own <MathEq tex="\pm\sigma=1/(2N\sqrt{m})" :display="false" /></span>
       </p>
     </div>

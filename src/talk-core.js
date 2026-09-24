@@ -74,9 +74,9 @@ function estimatePlot(rows,{moving=false,overshoot=false,count=rows.length}={}) 
   if(overshoot)b+=line(c.x(31),30,c.x(31),290,red,true)+text(c.x(31)+12,51,'N_opt = 31',red,20)+text(c.x(31)+12,78,'UNKNOWN TO THE ALGORITHM',red,15);
   rows.slice(0,count).forEach(r=>b+=circle(c.x(r.N),c.y(r.estimate??r.phi_hat),r.N>31?red:teal,4.3));
   if(moving){
-    b+=c.path(D.linear.probes.map((p,i)=>({N:p.N,mean:D.linear.moving_average[i]})),'N','mean',blue)+text(800,34,'moving average · w = 4',blue,18);
+    b+=c.path(D.linear.probes.map((p,i)=>({N:p.N,mean:D.linear.moving_average[i]})),'N','mean',blue)+text(800,34,'moving average: w = 4',blue,18);
     const stop=c.x(D.linear.probes.at(-1).N),chosen=c.x(D.linear.N_star);
-    b+=line(stop,260,chosen+10,260,red,false,3)+`<path d="M${chosen},260l12,-7v14Z" fill="${red}"/>`+text(stop,240,'STOP',red,22,'middle')+text(chosen-15,269,'backtrack · N = '+D.linear.N_star,red,21,'end');
+    b+=line(stop,260,chosen+10,260,red,false,3)+`<path d="M${chosen},260l12,-7v14Z" fill="${red}"/>`+text(stop,240,'STOP',red,22,'middle')+text(chosen-15,269,'backtrack: N = '+D.linear.N_star,red,21,'end');
   }
   return svg(b,'plot','Seeded phase estimates versus phase-gate uses');
 }
@@ -153,7 +153,7 @@ add('Safe for every possible phase?','ADAPTIVE N',axis({markers:[{n:15,label:'sa
 add('Could we find the hidden boundary?','ADAPTIVE N',states([axis({markers:[15],label:'How could we find this hidden boundary?'}),axis({markers:[15,16,17,18,19,20],label:'15 → 16 → 17 → 18 → …'}),axis({markers:[15,16,17,18,19,20],label:'Can we detect when we went too far?'})])+frag('<p class="center callout">Linear Search</p>',2),
   '',40,{estimator:true,scenario:true});
 add('A falling moving average signals overshoot','ADAPTIVE N',states([estimatePlot(D.linear.probes,{count:12}),estimatePlot(D.linear.probes),estimatePlot(D.linear.probes,{moving:true})]),
-  '',65,{estimator:true,scenario:true,source:'Seeded teaching run · 8 shots/probe · w = 4 · l = 6'});
+  '',65,{estimator:true,scenario:true,source:''});
 add('What is the obvious inefficiency?','ADAPTIVE N',axis({markers:Array.from({length:55},(_,i)=>15+i),label:'Many small steps'})+frag('<p class="center callout">Binary Search</p>',0),
   '',35,{estimator:true,scenario:true});
 add('Bisect the candidate interval','ADAPTIVE N',states([
@@ -165,7 +165,7 @@ add('Bisect the candidate interval','ADAPTIVE N',states([
   '',70,{estimator:true,scenario:true,source:'Schematic bisection · ideal labels · hidden φ = 0.02'});
 add('One detector does not fit both searches','ADAPTIVE N','',
   '',40,{estimator:true,scenario:true,figure:'SearchErrorEvolution',clicks:2});
-add('A one-shot overshoot criterion','ADAPTIVE N',`<div class="center"><p class="lead accent" style="margin-top:10px!important">theory to the rescue</p><p class="small muted" style="margin-top:34px">delta method — for large enough ${m('m')}</p>${eq('\\hat\\phi_N\\mid\\phi\\;\\approx\\;\\mathcal N\\!\\left(\\phi,\\tfrac{1}{4mN^2}\\right)')}${frag(`<p class="small muted" style="margin-top:30px">but ${m('\\phi')} is what we are after — plug in a safe, high-shot pilot ${m('\\hat\\phi_p')}</p>`+eq('\\hat\\phi_N\\mid\\hat\\phi_p\\;\\approx\\;\\mathcal N\\!\\left(\\hat\\phi_p,\\tfrac{1}{4mN^2}\\right)'),0)}</div>`,
+add('A one-shot overshoot criterion','ADAPTIVE N',`<div class="center"><p class="lead accent" style="margin-top:10px!important">theory to the rescue</p><p class="small muted" style="margin-top:34px">Delta method: for large enough ${m('m')}</p>${eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\phi,\\tfrac{1}{4mN^2}\\right)')}${frag(`<p class="small muted" style="margin-top:30px">but ${m('\\phi')} is what we are after - plug in a safe, high-shot pilot ${m('\\hat\\phi_p')}</p>`+eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\hat\\phi_p,\\tfrac{1}{4mN^2}\\right)'),0)}</div>`,
   'Galton board!!!\n\nTheory to the rescue.',45,{estimator:true,scenario:true,clicks:1});
 add('Reject the probes that fall too far','ADAPTIVE N','',
   '',50,{estimator:true,scenario:true,figure:'OneShotCriterion',clicks:3,figureProps:{probes:[{N:16,hits:14},{N:30,hits:0},{N:36,hits:1}],shots:30,caption:'N = 36 is only five past the safe depth — and the estimate has already collapsed'}});
