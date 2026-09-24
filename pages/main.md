@@ -31,8 +31,6 @@ clicks: 1
 -->
 
 ---
-clicks: 1
----
 
 # The catch: the risk of overshooting (aliasing)
 
