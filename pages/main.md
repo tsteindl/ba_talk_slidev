@@ -150,6 +150,10 @@ clicks: 3
 
 <TalkBody :number="17" :clicks="$clicks" :page="$page" />
 
+<!--
+- REALLY EXPENSIVE!!!!
+-->
+
 ---
 clicks: 2
 ---
@@ -224,7 +228,7 @@ clicks: 1
 
 ---
 
-# Beyond a branch-inverted point estimate
+# Further work
 
 <TalkBody :number="25" :clicks="$clicks" :page="$page" />
 

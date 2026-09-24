@@ -12,6 +12,8 @@ clicks: 4
 
 <!--
 "Might call this a probabilistic inverse problem."
+
+End: lets look at the experiment
 -->
 
 ---

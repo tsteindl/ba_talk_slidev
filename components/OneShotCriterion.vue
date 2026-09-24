@@ -82,7 +82,7 @@ const fmt = v => v.toFixed(4)
       </text>
       <text :x="xs(PHI_P) + 96" :y="ys(0.80)" class="law">
         𝒩( φ̂<tspan dy="6" class="sub">p</tspan><tspan dy="-6">, 1 / (4 m′ N²) )</tspan>
-        <tspan :x="xs(PHI_P) + 96" dy="24" class="law-sub">for N = {{ main.N }}</tspan>
+        <tspan :x="xs(PHI_P) + 96" dy="24" class="law-sub"></tspan>
       </text>
 
       <g v-if="stage >= 2" class="thresholds">

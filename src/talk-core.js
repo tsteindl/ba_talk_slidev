@@ -162,7 +162,7 @@ add('Bisect the candidate interval','ADAPTIVE N',states([
   axis({range:[50,86],markers:[{n:68,label:'68 · safe'}]}),
   axis({range:[68,86],markers:[{n:77,label:'77 · safe'}]}),
   axis({range:[77,86],markers:[{n:81,label:'81 · overshoot',color:red}],label:'But how do we classify a noisy probe?'})]),
-  '',70,{estimator:true,scenario:true,source:'Schematic bisection · ideal labels · hidden φ = 0.02'});
+  '',70,{estimator:true,scenario:true,source:''});
 add('One detector does not fit both searches','ADAPTIVE N','',
   '',40,{estimator:true,scenario:true,figure:'SearchErrorEvolution',clicks:2});
 add('A one-shot overshoot criterion','ADAPTIVE N',`<div class="center"><p class="lead accent" style="margin-top:10px!important">theory to the rescue</p><p class="small muted" style="margin-top:34px">Delta method: for large enough ${m('m')}</p>${eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\phi,\\tfrac{1}{4mN^2}\\right)')}${frag(`<p class="small muted" style="margin-top:30px">but ${m('\\phi')} is what we are after - plug in a safe, high-shot pilot ${m('\\hat\\phi_p')}</p>`+eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\hat\\phi_p,\\tfrac{1}{4mN^2}\\right)'),0)}</div>`,
