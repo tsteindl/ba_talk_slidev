@@ -65,13 +65,26 @@ export function buildOpeningModules({m,eq,states,svg,chart,text,line,circle,pipe
     if(stage>=2)b+=line(325,60,325,320,teal,true,3)+`<path d="M553 320A32 32 0 00562 297" fill="none" stroke="${teal}" stroke-width="2"/>`+text(527,296,'α',teal,27)+text(348,196,'h',teal,27);
     return diagram(b,'Inaccessible object height and shadow form a right triangle on level ground with known sun elevation angle');
   }
+  const poleLaw=`<div class="pole-law">${eq('\\tan\\alpha=\\frac{h}{L}\\;\\Longrightarrow\\;L=\\frac{h}{\\tan\\alpha}')}${eq('\\alpha=\\arctan\\!\\left(\\frac{h}{L}\\right)')}</div>`;
+  // A kids-book sun: disc plus short rays all round. Sits on the ray line
+  // y = x - 225 that grazes the pole's top corner, far enough down the line
+  // that the upward rays clear the top of the viewBox (the svg root clips).
+  const sunDisc=(cx,cy,r=18)=>{
+    const gold='#d7aa3e';
+    let out=circle(cx,cy,gold,r);
+    for(let k=0;k<12;k++){
+      const a=k*Math.PI/6,c=Math.cos(a),si=Math.sin(a);
+      out+=line(cx+c*(r+6),cy+si*(r+6),cx+c*(r+15),cy+si*(r+15),gold,false,3);
+    }
+    return out;
+  };
   function sunAngleScene(stage=0) {
     // Known vertical gnomon height h=220 and a 45° illustrative solar elevation.
     let b=line(100,320,960,320,gray,false,4)+`<rect x="275" y="100" width="50" height="220" fill="${ink}"/>`;
-    b+=circle(285,20,'#d7aa3e',18)+text(475,78,'α = ?',ink,55,'middle');
+    b+=sunDisc(265,40)+text(475,78,'α = ?',ink,55,'middle');
     b+=line(255,100,255,320,teal,true,2)+line(245,100,265,100,teal)+line(245,320,265,320,teal)+text(235,218,'known h',teal,25,'end');
-    if(stage>=1)b+=line(325,317,545,317,ink,false,12)+line(325,350,545,350,blue,true,2)+text(435,382,'measured L',blue,27,'middle');
-    if(stage>=2)b+=line(305,80,545,320,'#b49a55',false,3)+`<path d="M510 320A35 35 0 00520 295" fill="none" stroke="${teal}" stroke-width="3"/>`+text(488,292,'α',teal,28);
+    if(stage>=1)b+=line(325,317,545,317,ink,false,12)+line(325,350,545,350,blue,true,2)+line(325,338,325,362,blue,false,3)+line(545,338,545,362,blue,false,3)+text(435,382,'measured L',blue,27,'middle');
+    if(stage>=2)b+=line(305,80,545,320,'#b49a55',false,3)+`<path d="M510 320A35 35 0 01520 295" fill="none" stroke="${teal}" stroke-width="3"/>`+text(488,292,'α',teal,28);
     return diagram(b,'Known-height vertical gnomon and its measured shadow infer the unknown solar elevation angle');
   }
   const modules={
@@ -106,9 +119,9 @@ export function buildOpeningModules({m,eq,states,svg,chart,text,line,circle,pipe
       ['Known geometry → infer height',bridge({hidden:'h',probe:'sun angle '+m('\\alpha'),observed:m('L'),law:'L=h/\\tan\\alpha',inferred:'\\hat h',note:'measure shadow → infer height',equation:'\\hat h=\\hat L\\tan\\alpha'}),'With sun elevation alpha, tan alpha=h/L, so L=h/tan alpha and h_hat=L_hat tan alpha. This requires level ground and a vertical object; terrain, diffuse shadow edges and angular uncertainty are omitted from this schematic. Final flow shares the quantum pipeline layout. '+scientificSource]
     ],
     'sun-angle':[
-      ['What is the Sun’s elevation?',sunAngleScene(),'The hidden quantity is now the solar elevation angle alpha. Use a vertical gnomon of known height h on level ground; do not look at or access the Sun directly. Parallel rays and a well-defined shadow edge are assumed. '+scientificSource],
-      ['A known pole turns angle into length',states([sunAngleScene(1),sunAngleScene(2)]),'Measure the horizontal shadow length L, then reveal the right triangle and angle alpha. The drawing uses alpha=45 degrees and h=L for visual simplicity. In a real measurement, the pole must be vertical and the ground level. '+scientificSource],
-      ['Shadow length → infer Sun angle',bridge({hidden:'\\alpha',probe:'known height '+m('h'),observed:m('L'),law:'L=h/\\tan\\alpha',inferred:'\\hat\\alpha',note:'known probe → visible response → infer angle',equation:'\\hat\\alpha=\\arctan\\!\\left(\\frac{h}{\\hat L}\\right)'}),'Since tan alpha=h/L, a known height and measured shadow length give alpha_hat=arctan(h/L_hat). This is physically founded and structurally close to metrology: a hidden angle controls an observable response that is inverted. The quantum case replaces deterministic length by an estimated outcome probability. '+scientificSource]
+      ['At what angle do the Sun’s rays hit the ground?',sunAngleScene(),''],
+      ['A known pole casts a shadow with observable length',states([sunAngleScene(1),sunAngleScene(2)+poleLaw]),'"If we remember our SOHCAHTOA rules."'],
+      ['Shadow length → infer Sun angle',bridge({hidden:'\\alpha',probe:'known height<span class="probe-symbol">'+m('h')+'</span>',observed:m('L'),law:'L=h/\\tan\\alpha',inferred:'\\hat\\alpha',note:'known probe → visible response → infer angle',equation:'\\hat\\alpha=\\arctan\\!\\left(\\frac{h}{\\hat L}\\right)'}),'"The process is: estimate a hidden quantity by measuring an observable quantity and inverting the process by which it was generated."\n\n"Could call this an inverse problem."']
     ]
   };
   return modules;

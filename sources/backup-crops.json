@@ -57,19 +57,22 @@
     "kind": "table",
     "file": "table-03-01.png",
     "anchor": "Table 3.1:",
-    "thesis_page": 26
+    "thesis_page": 26,
+    "rendered": "talk"
   },
   {
     "kind": "table",
     "file": "table-04-01.png",
     "anchor": "Table 4.1:",
-    "thesis_page": 33
+    "thesis_page": 33,
+    "rendered": "talk"
   },
   {
     "kind": "table",
     "file": "table-04-02.png",
     "anchor": "Table 4.2:",
-    "thesis_page": 34
+    "thesis_page": 34,
+    "rendered": "talk"
   },
   {
     "kind": "table",
@@ -81,7 +84,8 @@
     "kind": "table",
     "file": "table-04-04.png",
     "anchor": "Table 4.4:",
-    "thesis_page": 36
+    "thesis_page": 36,
+    "rendered": "talk"
   },
   {
     "kind": "table",
@@ -111,13 +115,15 @@
     "kind": "table",
     "file": "table-b-02a.png",
     "anchor": "Table B.2:",
-    "thesis_page": 54
+    "thesis_page": 54,
+    "rendered": "talk"
   },
   {
     "kind": "table",
     "file": "table-b-02b.png",
     "anchor": "Table B.2:",
-    "thesis_page": 54
+    "thesis_page": 54,
+    "rendered": "talk"
   },
   {
     "kind": "table",
@@ -135,6 +141,7 @@
     "kind": "table",
     "file": "table-c-02.png",
     "anchor": "Table C.2:",
-    "thesis_page": 56
+    "thesis_page": 56,
+    "rendered": "talk"
   }
 ]

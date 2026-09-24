@@ -1,0 +1,52 @@
+[
+  {
+    "file": "theorem-thm-qcrb.png",
+    "label": "thm:qcrb",
+    "kind": "Theorem",
+    "number": "2.5.1",
+    "title": "QFI bound for an error-propagation estimator",
+    "cites": []
+  },
+  {
+    "file": "theorem-fact-sql-vs-hl.png",
+    "label": "fact:sql-vs-hl",
+    "kind": "Fact",
+    "number": "2.6.1",
+    "title": "SQL vs Heisenberg Limit",
+    "cites": []
+  },
+  {
+    "file": "theorem-thm-delta-method.png",
+    "label": "thm:delta-method",
+    "kind": "Theorem",
+    "number": "2.6.2",
+    "title": "Delta Method",
+    "cites": []
+  },
+  {
+    "file": "theorem-lemma-asymp-dist-est.png",
+    "label": "lemma:asymp-dist-est",
+    "kind": "Lemma",
+    "number": "2.6.3",
+    "title": "Asymptotic distribution of the entangled estimator",
+    "cites": []
+  },
+  {
+    "file": "theorem-thm-asympt-dist-given-pilot.png",
+    "label": "thm:asympt-dist-given-pilot",
+    "kind": "Theorem",
+    "number": "3.2.1",
+    "title": "",
+    "cites": [
+      "johnson1994continuous"
+    ]
+  },
+  {
+    "file": "theorem-thm-stat-safeguard.png",
+    "label": "thm:stat-safeguard",
+    "kind": "Theorem",
+    "number": "3.2.2",
+    "title": "",
+    "cites": []
+  }
+]

@@ -1,0 +1,861 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+\cleardoubleoddpage%  Make sure to start each chapter on a new odd page
+\chapter{Theoretical background}
+\label{sec:theory}
+This chapter presents the two canonical quantum metrology protocols for estimating an unknown parameter $\phi$ and analyzes them with theoretical methods.
+We first recall the necessary quantum computing preliminaries and analytically derive the protocols.
+Then, the information-theoretical concepts of (quantum) Fisher Information and (quantum) Cramér-Rao lower bound are introduced.
+Using these tools, we derive their QFI scalings and determine when the specified readouts attain the corresponding classical and quantum bounds.
+Finally, we perform numerical simulations to verify these asymptotic results and to investigate
+the behavior of the protocols in the resource-limited regime.
+
+There are a number of established quantum metrology protocols \cite{giovannettiQuantumMetrology2006,giovannettiAdvancesQuantumMetrology2011, tothQuantumMetrologyQuantum2014}.
+In particular, we will consider circuits involving the parallel preparation and readout of $N$ qubits with $N$ parameterized phase gates.
+We will treat here two main ones as introduced by Giovannetti et al. in \cite{giovannettiQuantumMetrology2006}: 
+both the $N$-qubit separable protocol as well as the $N$-qubit maximally entangled protocol 
+(dubbed the ``CC-strategy'' and ``QQ-strategy'' respectively in \cite{giovannettiQuantumMetrology2006}).
+
+\section{Preliminaries}
+\label{sec:theory:preliminaries}
+In this section we introduce the basic concepts of quantum circuits needed for the metrology protocols studied in this work.
+
+A qubit is a two-level quantum system described by a state vector in $\mathbb{C}^2$ \cite{kuengQuantumcomputing, nielsenQuantumComputationQuantum2012}. In the computational basis, the basis states are given by
+\begin{align}
+    \lvert 0 \rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad
+    \lvert 1 \rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}.
+\end{align}
+A general qubit state is a superposition of these basis states,
+\begin{align}
+    \lvert \psi \rangle = \alpha \lvert 0 \rangle + \beta \lvert 1 \rangle,
+\end{align}
+where $\alpha, \beta \in \mathbb{C}$ and $|\alpha|^2 + |\beta|^2 = 1$.
+
+Quantum circuits are composed of unitary operations acting on qubits. A central operation in our protocols is the Hadamard gate \cite{nielsenQuantumComputationQuantum2012}
+\begin{align}
+    H = \frac{1}{\sqrt{2}} 
+    \begin{pmatrix}
+        1 & 1 \\
+        1 & -1
+    \end{pmatrix},
+\end{align}
+which creates superpositions according to $H\lvert 0 \rangle = \lvert + \rangle$, where $\lvert + \rangle = \frac{1}{\sqrt{2}}(\lvert 0 \rangle + \lvert 1 \rangle)$.
+
+To parameterize the circuit, we introduce an unknown dimensionless phase $\phi$, which we aim to estimate from measurement data.
+For the moment, we assume $\phi \ll 1$; the numerical studies later use phases of order $10^{-2}$ as a concrete model regime.
+This one-decade interval is chosen as a controlled benchmark: it keeps \(\phi\) below unity 
+while producing substantial variation in the useful phase-gate count, 
+allowing the resource-allocation strategies to be meaningfully distinguished. 
+The assumption $\phi \ll 1$ will also simplify several theoretical considerations and 
+should not be interpreted as a universal physical phase scale.
+% This value is not intended as a universal phase scale for a particular application, because the physical parameter-to-phase conversion depends on the sensing interaction and interrogation time.
+
+The phase is encoded via the unitary operator
+\begin{align}
+    U(\phi) = e^{i \phi Z} =
+    \begin{pmatrix}
+        e^{i \phi} & 0 \\
+        0 & e^{-i\phi}
+    \end{pmatrix},
+\end{align}
+where $Z$ denotes the Pauli-$Z$ matrix \cite{pauliZurQuantenmechanikMagnetischen1927}
+\begin{align}
+    \sigma_x = X =
+    \begin{pmatrix}
+        0 & 1 \\
+        1 & 0
+    \end{pmatrix},
+    \quad
+    \sigma_y = Y =
+    \begin{pmatrix}
+        0 & -i \\
+        i & 0
+    \end{pmatrix},
+    \quad
+        \sigma_z = Z =
+    \begin{pmatrix}
+        1 & 0 \\
+        0 & -1
+    \end{pmatrix}.
+\end{align}
+
+For systems of multiple qubits, joint states and operations are described using tensor products. For example, $\lvert 0 \rangle^{\otimes N}$ denotes $N$ qubits initialized in the state $\lvert 0 \rangle$, while operations such as $H^{\otimes N}$ or $U(\phi)^{\otimes N}$ act independently on each qubit.
+
+Finally, measurements are performed in the computational basis. According to Born's rule \cite{hallQuantumTheoryMathematicians2013}, the probability of observing a basis state $\lvert x \rangle$ is given by
+\begin{align}
+    p(x) = |\langle x \vert \psi \rangle|^2.
+\end{align}
+By repeatedly preparing and measuring the circuit, these probabilities can be estimated and used to construct an estimator $\hat{\phi}$ for the unknown parameter.
+All circuit diagrams are created using the ``Quantum Circuit Library'' \cite{wilkensQuantumCircuitLibrary2023}.
+
+
+\section{Separable protocol}
+\label{sec:theory:separable}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth,keepaspectratio]{fig/n qubit multiple uses.png}
+\caption{Circuit representing the separable quantum metrology protocol using $N$ 
+qubits and $N$ $U(\phi)$ gates.}
+\label{fig:nqubit-multiple-phase}
+\end{figure}
+Figure \ref{fig:nqubit-multiple-phase} shows the setup of the separable protocol in the form of a circuit diagram. The qubits are initialized
+in the zero state $\lvert 0 \rangle$, 
+then a Hadamard gate is applied creating a superposition. After the phase gate, which parameterizes our circuit with the unknown parameter $\phi$, another
+Hadamard gate is applied, mapping the phase information to computational-basis measurement probabilities. Subsequently, the state is measured in the computational basis.
+We calculate the probability to measure a ``0''  outcome using Born's rule:
+
+\begin{equation}
+\begin{aligned}
+    p_\text{sep}(00\ldots0) &= \vert \langle 00\ldots0\vert H^{\otimes N} U(\phi)^{\otimes N} H^{\otimes N} \vert 00\ldots0 \rangle \vert ^2\\
+     &= \vert \langle ++\ldots+\vert U(\phi)^{\otimes N} \vert ++\ldots+ \rangle \vert ^2\\
+     &= \vert \langle +\vert U(\phi)\vert + \rangle^N \vert ^2\\
+     &=\left|  \frac{1}{2}\left( e^{i\phi} +e^{-i\phi}\right)\right|^{2N}\\
+     &=\cos^{2N}(\phi)\label{eq:prob-zero-sep},
+\end{aligned}
+\end{equation}
+where we have used: $\langle + \vert U(\phi)\vert +\rangle= \frac{1}{2} \begin{pmatrix} 1 & 1 \end{pmatrix} \begin{pmatrix}
+        e^{i\phi} & 0\\
+        0 & e^{-i\phi}
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 \\
+        1
+    \end{pmatrix}=\frac{1}{2}\left( e^{i\phi} +e^{-i\phi}\right)$.
+
+Now we are given a characterization of the output probability in terms of the unknown parameter $\phi$. As $\phi$ is small we can make the additional assumption $\phi\in[0, \frac \pi 2]$, 
+where $\cos$ is bijective, 
+hence we can express $\phi$ in terms of $p(0)$ using inverse functions
+\begin{equation}
+    \begin{aligned}
+        &p_\text{sep}(00\ldots 0)=\cos^{2N}(\phi)\\
+        \iff  &\hat\phi_\text{sep} = \arccos({p_\text{sep}(00\ldots 0)^{\frac{1}{2N}}}).
+    \end{aligned}
+\label{eq:est-sep}
+\end{equation}
+
+After measuring the circuit a sufficient number of times we can approximate 
+$\hat p_\text{sep}(00\ldots 0)$, which we can then use to calculate $\hat\phi$.
+As $\hat p_\text{sep}(00\ldots 0)$ is determined experimentally, 
+$\hat\phi$ and $\hat p_\text{sep}(00\ldots 0)$ are estimators.
+This procedure allows us to complete the workflow described in Figure \ref{fig:qm_flowchart}. 
+
+% since 
+
+\section{Fully entangled protocol}
+\label{sec:theory:entangled}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{fig/entangled circuit.png}
+\caption{Circuit representing the fully entangled quantum metrology protocol 
+using $N$ entangled qubits and $N$ $U(\phi)$ gates}
+\label{fig:nqubit-entangled-circuit}
+\end{figure}
+Figure \ref{fig:nqubit-entangled-circuit} shows the case where all qubits are fully entangled.
+The probability to measure a ``0'' outcome in all $N$ qubits can be written with the Greenberger-Horne-Zeilinger state $\vert \mathrm{GHZ} \rangle=\frac{1}{\sqrt 2}\left( \vert 0 \rangle^{\otimes N } + \vert 1 \rangle^{\otimes N}\right)$ \cite{greenberger2007goingbellstheorem}:
+\begin{equation}
+    \begin{aligned}
+        p_\text{ent}(00\ldots0) &= \left| \langle \mathrm{GHZ}\vert U(\phi)^{\otimes N} \vert \mathrm{GHZ} \rangle \right|^2 \\
+        &= | \frac{1}{2} ( \langle 00\ldots0\vert U(\phi)^{\otimes N} \vert 00\ldots0\rangle + \langle 00\ldots0 \vert U(\phi)^{\otimes N} \vert 11\ldots1\rangle \\
+        &\qquad + \langle 11\ldots1\vert U(\phi)^{\otimes N} \vert 00\ldots0\rangle + \langle 11\ldots1\vert U(\phi)^{\otimes N} \vert 11\ldots1\rangle ) |^2 \\
+        &= \left| \frac{1}{2}\left( \underbrace{\langle 00\ldots0\vert U(\phi)^{\otimes N} \vert 00\ldots0\rangle}_{(e^{i\phi})^N} + 0 + 0 +\underbrace{\langle 11\ldots1\vert U(\phi)^{\otimes N} \vert 11\ldots1\rangle}_{(e^{-i\phi})^N} \right) \right|^2\\
+        &=\cos^2(N\phi).
+    \end{aligned}
+\label{eq:prob-zero-ent}
+\end{equation}
+Because $\cos^2(N\phi)$ is not globally one-to-one, inversion requires the identifiable branch
+$0\leq N\phi\leq\pi/2$, or equivalently $\phi\in [0, \frac{\pi}{2N}]$. On this branch we can write
+\begin{align}
+    \hat\phi_\text{ent}=\frac 1 N \cdot\arccos(\sqrt{p_\text{ent}(00\ldots 0)}).
+    \label{eq:est-ent}
+\end{align}
+
+% In practice, experimentally feasible states such as NOON states \cite{raoHighPerformanceNOONState2024,koflerQuantumMetrology, tothQuantumMetrologyQuantum2014} and less exotic states, such as squeezed states are used in a Mach-Zehnder interferometer to perform accurate phase measurements instead of GHZ states \cite{kokQuantumLithographyEntanglement2004}.
+
+\section{Sequential protocol}
+\label{sec:theory:sequential}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth,height=\textheight,keepaspectratio]{fig/1qubit many uses.drawio.png}
+\caption{Circuit using one qubit and $N$ sequential uses of $U(\phi)$}
+\label{fig:1qubit-multiple-phase}
+\end{figure}
+
+The setup shown in Figure \ref{fig:1qubit-multiple-phase} is mathematically equivalent to the fully entangled protocol.
+Since the phase gate can be written as a matrix exponential $U(\phi)=e^{i\phi Z}$,
+ and all such gates commute, repeated applications satisfy
+$(U(\phi))^N = e^{iN \phi Z}$, and we can express the readout probability as
+\begin{equation}
+    \begin{aligned}
+        p_\text{seq}(0) &= \vert \langle 0\vert H \:  U(\phi)^N H \vert 0 \rangle \vert ^2\\
+        &=\vert \langle + \vert U(N\phi)\vert +\rangle\vert^2 \\
+        &=\left| \frac{1}{2}\left( e^{i N\phi} +e^{-i N\phi}\right)\right|^2\\
+        &=\cos^2(N \phi).
+    \end{aligned}
+\end{equation}
+The two estimators $\hat\phi_\text{ent}$ and $\hat\phi_\text{seq}$, the latter
+corresponding to the single-qubit sequential protocol introduced above, 
+are mathematically equivalent.
+Accordingly, the following analysis applies to both estimators.
+In particular, both have ideal QFI $4N^2$, so multipartite entanglement is not necessary for the corresponding Heisenberg scaling.
+For clarity, we will henceforth restrict our discussion to the maximally entangled estimator $\hat\phi_\text{ent}$, 
+with all results directly carrying over to the sequential case.
+The physical resource requirements of the two implementations, however, differ: 
+the sequential protocol avoids the preparation of an $N$-qubit GHZ state, 
+but replaces it by the need to keep a single probe coherent over $N$ consecutive applications of $U(\phi)$. 
+In realistic experiments, decoherence, gate errors, loss, and finite interrogation time can therefore make the sequential protocol nontrivial as well.
+
+
+\section{Mathematical foundations and the QCRB}
+\label{sec:theory:qcrb}
+When estimating a \textbf{classical} parameter $\phi$, the variance
+of an unbiased estimator $\hat\phi$ is bounded from below by the Cramér-Rao 
+lower bound under the usual regularity conditions
+\begin{align}
+\mathrm{Var(\hat\phi)} \geq \frac 1 {I(\phi)},
+\end{align}
+where $I(\phi)$ is the (classical) Fisher information \cite{petzINTRODUCTIONQUANTUMFISHER2011}
+\begin{align}
+I(\phi) = \mathbb{E}\left[ \left(\frac{\partial \log f(x;\phi)}{\partial \phi}\right)^2\right],
+\end{align}
+with model density $f(x;\phi)$.
+This bound formalizes the statement that no unbiased
+estimator can achieve a variance smaller than $1/I(\phi)$.
+
+The quantum case follows an analogous structure. 
+Assume that a Hamiltonian $A$ generates a unitary transformation with 
+parameter $\phi$ from some initial state $\rho_0$
+\begin{align}
+\rho_\phi:=\rho(\phi)=e^{-i A \phi} \rho_0 e^{i A \phi}.
+\label{eq:fisher-evolution}
+\end{align}
+The variance of a locally unbiased estimator $\hat\phi$, denoted by
+$(\Delta\hat\phi)^2:=\operatorname{Var}(\hat\phi)$, is bounded from below by
+the quantum Cramér-Rao lower bound (QCRB) as \cite{braunsteinStatisticalDistanceGeometry1994,parisQuantumEstimationQuantum2008a,liuQuantumFisherInformation2020a}
+\begin{align}
+    (\Delta \hat\phi)^2\geq \frac{1}{I_Q[\rho , A]}.
+\end{align}
+For the one-parameter state family $\rho_\phi$, let $L_\phi$ denote an SLD, i.e.\ a Hermitian symmetric logarithmic derivative satisfying
+\cite{braunsteinStatisticalDistanceGeometry1994,parisQuantumEstimationQuantum2008a,liuQuantumFisherInformation2020a}
+\begin{align}
+    \frac{\mathrm d\rho_\phi}{\mathrm d\phi}
+    &= \frac{1}{2}\left(L_\phi\rho_\phi+\rho_\phi L_\phi\right),
+    \label{eq:sld-definition}\\
+    I_Q[\rho_\phi]
+    &= \mathrm{Tr}\!\left(\rho_\phi L_\phi^2\right).
+    \label{eq:qfi-sld}
+\end{align}
+For the pure-state unitary family generated by $A$ in Equation~(\ref{eq:fisher-evolution}), we write this quantity as $I_Q[\rho_0,A]$; it simplifies to \cite{tothQuantumMetrologyQuantum2014,liuQuantumFisherInformation2020a}
+\begin{align}
+    I_Q[\rho_0,A] = 4(\Delta A)^2. \label{eq:fisher_pure_states}
+\end{align}
+The variance of an operator $M$ is $(\Delta M)^2=\langle M^2 \rangle - \langle M \rangle^2$, with the expectation value $\langle\cdot\rangle$.
+
+% When the density matrix is given in its eigenbasis as
+% \begin{align}
+%     \rho=\sum_k \lambda_k\vert k\rangle \langle k\vert,
+% \end{align}
+% the quantum Fisher information can be written, due to \cite{tothQuantumMetrologyQuantum2014}, as
+% \begin{align}
+%     I_Q[\rho, A]=2\sum_{k,l}\frac{(\lambda_k-\lambda_l)^2}{\lambda_k+\lambda_l}\vert\langle k\vert A\vert l\rangle \vert ^2.
+% \end{align}
+Intuitively, repeating a measurement and averaging the resulting outcomes reduces its uncertainty.
+In estimation theory this behavior is described by the central limit theorem (CLT) \cite{cramer1946mathematical} which states that for a large number $m$ of independent measurement
+results, the sample mean will converge to a Gaussian distribution with variance 
+$(\sigma)^2/m$ so that the variance of the sample mean scales as $1/m$.
+This is captured rigorously by the QCRB for $m$ independent measurement runs \cite{giovannettiQuantumMetrology2006}.
+\begin{theorem}[QFI bound for an error-propagation estimator]\label{thm:qcrb}
+Consider a pure-state unitary family generated by $A$, and let $\hat\phi$ be an estimator constructed by error propagation from a measurement observable $M$ with $\partial_\phi\langle M\rangle\neq0$. 
+For $m$ independent repetitions, its variance satisfies
+    % The achievable precision in parameter estimation with a quantum system is bounded from below by:
+\begin{align}
+    (\Delta \hat \phi)^2\geq \frac{1}{m\ I_Q[\rho , A]},
+\end{align}
+where $I_Q[\rho , A]$ is the QFI of the state family generated by the Hermitian operator $A$.
+\end{theorem}
+\begin{proof}[Proof of pure-state case]
+% For the pure-state unitary model considered in this work, the bound for an estimator constructed by error propagation from a measurement observable follows as below.
+Because all state families considered in this work are pure, 
+we perform the proof for pure states with the QFI given as in Equation~(\ref{eq:fisher_pure_states}).
+The error-propagation formula for an estimator constructed from a measurement observable \cite{tothQuantumMetrologyQuantum2014} is given by
+\begin{align}
+    (\Delta \hat \phi)^2=\frac{(\Delta M)^2}{\left|\partial_\phi \langle M \rangle \right|^2},
+    \label{eq:error_propagation}
+\end{align}
+for a measurement operator $M$. Since for pure states
+\begin{align}
+    |\psi(\phi) \rangle =e^{-i A \phi} | \psi_0\rangle,
+\end{align}
+we have
+\begin{align}
+    \partial_\phi | \psi(\phi)\rangle = -i A | \psi(\phi)\rangle.
+\end{align}
+Therefore, by the product rule
+\begin{align}
+\partial_\phi \langle M \rangle =  \langle \partial_\phi \psi(\phi) | M | \psi(\phi) \rangle + \langle \psi(\phi) | M |\partial_\phi  \psi(\phi) \rangle = i \langle AM\rangle - i \langle M A \rangle = i\langle [A, M] \rangle. \label{eq:partial_phi_exp_M}
+\end{align}
+Now define
+\begin{align}
+&|u\rangle = (A-\langle A \rangle) |\psi \rangle,\\
+&|v\rangle = (M-\langle M \rangle) |\psi \rangle.
+\end{align}
+The Cauchy-Schwarz inequality \cite{braunsteinStatisticalDistanceGeometry1994} gives
+\begin{align}
+    |\langle u | v \rangle |^2 \leq \langle u | u \rangle \langle v | v \rangle.
+\end{align}
+Since
+\begin{align}
+    &\langle u | u \rangle = (\Delta A)^2, \\
+    &\langle v | v \rangle = (\Delta M)^2,
+\end{align}
+we obtain
+\begin{align}
+(\Delta A)^2(\Delta M)^2 \geq |\langle u | v\rangle|^2 \geq |\mathrm{Im} \langle u | v\rangle | ^2 = \frac 1 4 | \langle u | v \rangle - \langle v | u\rangle |^2 = \frac 1 4 |\langle [A, M]\rangle |^2,
+\end{align}
+where we have used $|\mathrm{Im}(z)|\leq |z|$ and $\mathrm{Im}(z) = \frac 1 {2i} \left(z - \bar z\right)$.
+Combining with (\ref{eq:partial_phi_exp_M}) and rearranging gives the desired result for a single measurement run.
+Repeating the experiment independently $m$ times results in the product state
+\begin{align}
+    \rho^{\otimes m},
+\end{align}
+whose QFI is additive \cite{tothQuantumMetrologyQuantum2014},
+\begin{align}
+    I_Q(\rho^{\otimes m}, A^{(m)}) = m I_Q(\rho, A),
+\end{align}
+where $A^{(m)}=\sum_{k=1}^m A^{(k)}$. Consequently,
+\begin{align}
+    (\Delta \hat \phi)^2 \geq \frac 1 {m I_Q}.
+\end{align}
+\end{proof}
+% The theorem can be proven using the Heisenberg uncertainty relation and the Cauchy-Schwarz 
+% inequality \cite{braunsteinStatisticalDistanceGeometry1994}.
+
+\section{Comparison of protocols}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth,keepaspectratio]{fig/proba_comparison.png}
+\caption{Comparison of the probability of measuring 
+``0'' for the separable case ($p_\mathrm{sep}$) and the entangled case 
+($p_\mathrm{ent}$) for $N=10$. In the 
+entangled case the probability oscillates much faster than in 
+the separable case, yielding higher sensitivity for small $\phi$.
+Adapted from \cite{koflerQuantumInformationa}.}
+\label{fig:proba_comparison}
+\end{figure}
+
+Both for the sequential case $p_\mathrm{seq}(0)$ (Section \ref{sec:theory:sequential}) and the entangled case $p_\mathrm{ent}(00\ldots0)$  (Section \ref{sec:theory:entangled}), we observe that the output probability oscillates much faster than the output probability for the separable case (Section \ref{sec:theory:separable}),
+enhancing sensitivity to the parameter $\phi$.
+Figure \ref{fig:proba_comparison} highlights the comparison.
+This observation corresponds to the distinction between the shot-noise (standard quantum) 
+limit (SQL) and the Heisenberg limit.
+% \begin{fact}[SQL vs Heisenberg Limit]
+% Classical interferometers are limited by the shot-noise (standard quantum) limit, 
+% while entangled quantum metrology can achieve the Heisenberg limit scaling with the number of qubits $N$:
+% \begin{align}
+    % &(\Delta \phi)^2_\text{SQL} \sim \frac 1 {m N}\\
+    % &(\Delta \phi)^2_\text{HL} \sim \frac 1 {m N^2},
+% \end{align}
+% for $m$ independent measurement runs.
+% \end{fact}
+
+\begin{fact}[SQL vs Heisenberg Limit]\label{fact:sql-vs-hl}
+Under the parallel resource accounting used here, the $N$-qubit separable protocol has $I_Q=4N$ and standard quantum limit (SQL) scaling for $m$ independent measurement runs,
+\begin{align}
+    (\Delta \phi_\text{sep})^2 \sim \frac 1 {m N},
+\end{align}
+whereas the $N$-qubit GHZ protocol has $I_Q=4N^2$ and Heisenberg limit (HL) scaling,
+\begin{align}
+    (\Delta \phi_\text{ent})^2 \sim \frac 1 {m N^2}.
+\end{align}
+% The ideal sequential protocol achieves the same $I_Q=4N^2$ through $N$ coherent phase-gate applications to one qubit; multipartite entanglement is therefore not necessary for this scaling.
+\end{fact}
+
+This notion can be derived explicitly using three different but related concepts.
+Before proceeding, we recall the delta method \cite{doobLimitingDistributionsCertain1935},
+which lets us reason that our estimators are indeed asymptotically unbiased.
+\begin{theorem}[Delta Method]\label{thm:delta-method}
+If there is a sequence of random variables $X_n$ that converges to normal in distribution, i.e.
+\begin{align}
+\sqrt n [X_n - \theta] \xrightarrow{d} \mathcal N(0, \sigma^2),
+\end{align}
+where $\theta$ and $\sigma^2$ are finite valued constants, then
+\begin{align}
+\sqrt n [g(X_n) - g(\theta)]\xrightarrow{d} \mathcal N (0, \sigma^2 \cdot [g'(\theta)] ^2)
+\end{align}
+for a smooth function $g$ with $g'(\theta)\neq 0$.
+\end{theorem}
+
+This theorem lets us reason about the asymptotic distributions of our estimators.
+
+\begin{lemma}[Asymptotic distribution of the entangled estimator]\label{lemma:asymp-dist-est}
+Fix $N$ and a true phase in the interior of the identifiable branch, $0<N\phi<\pi/2$, so that $0<p_0=\cos^2(N\phi)<1$.
+Then the entangled inversion estimator is asymptotically normally distributed according to
+\begin{align}
+    \sqrt{m}\,(\hat\phi_\text{ent}-\phi) \xrightarrow{d} \mathcal N\!\left(0, \frac{1}{4N^2}\right),
+\end{align}
+where the probability statement is conditional on the fixed true phase $\phi$.
+As a large-$m$ approximation, this reads
+\begin{align}
+    \hat\phi_\text{ent} \mid \phi \approx \mathcal N\!\left(\phi, \frac{1}{4mN^2}\right).
+\end{align}
+Moreover, the estimator is asymptotically unbiased on this branch:
+\begin{align}
+    \mathbb E[\hat \phi_\text{ent} \mid \phi] \rightarrow \phi.
+\end{align}
+\end{lemma}
+\begin{proof}
+    The proof is a direct application of the delta method (Theorem \ref{thm:delta-method}).
+Let $p$ be the probability of reading out an event of a quantum experiment.
+With $m$ shots $p$ can be estimated by the share of hits $k$ of an invocation of the quantum computer:
+\begin{align}
+    \hat p = \frac k m,
+\end{align}
+where $k$ follows a Binomial distribution \cite{cramer1946mathematical}
+\begin{align}
+    k \mid \phi \sim \text{Binomial}(m, p).
+\end{align}
+Because $k$ is binomial, and thus converges to normal in distribution as $m\to \infty$, we have
+\begin{align}
+\sqrt m (\hat p - p) \xrightarrow{d} \mathcal N(0, p(1-p)).
+\end{align}
+Now define
+\begin{align}
+    g(p) = \frac 1 N \arccos \sqrt p,
+\end{align}
+and thus
+\begin{align}
+    g'(p) = -\frac{1}{2N\sqrt{p(1-p)}}.
+\end{align}
+Since
+\begin{align}
+[g'(p)]^2p(1-p) = \frac{1}{4N^2p(1-p)} p(1-p) = \frac{1}{4N^2},
+\end{align}
+the delta method gives:
+\begin{align}
+\sqrt m (\hat\phi - \phi) \xrightarrow{d} \mathcal N\left(0, \frac{1}{4N^2}\right).
+\end{align}
+Equivalently, for sufficiently large $m$,
+\begin{align}
+\hat\phi \mid \phi \approx \mathcal N\left(\phi, \frac{1}{4mN^2}\right).
+\end{align}
+Since $\hat\phi_\text{ent}\leq \frac{\pi}{2N}$ is bounded, convergence in probability also implies convergence in $L^1$, thus implying
+the asymptotic unbiasedness.
+\end{proof}
+
+
+
+\subsection{Argument 1: Error-propagation formula}
+\label{sec:arg1}
+The phase encoding considered here is equivalent to a linear interferometric scheme, 
+as studied by Tóth et al. in \cite{tothQuantumMetrologyQuantum2014}. 
+The error propagation formula (\ref{eq:error_propagation}) shows that the precision depends on the sensitivity
+of the expectation value $\langle M \rangle$ to changes in $\phi$ \cite{tothQuantumMetrologyQuantum2014}.
+In our case the measurement operator corresponds to
+\begin{align}
+    M = |00\cdots 0\rangle \langle 00\cdots 0|.
+\end{align}
+Measuring the expectation of this operator is equivalent to a readout of the zero state, meaning we can use our previous 
+results from Sections \ref{sec:theory:separable} and \ref{sec:theory:entangled}.
+\subsubsection{Separable case}
+When we first consider the separable case, we can use Equation~(\ref{eq:prob-zero-sep}) to write
+\begin{align}
+\langle M \rangle = \cos^{2N}(\phi),
+\end{align}
+and since $M$ is a projector, by definition $M^2=M$, and
+\begin{align}
+    &(\Delta M)^2 = \cos^{2N}(\phi)(1-\cos^{2N}(\phi))\\
+    &\partial_\phi \langle M\rangle = -2N\sin(\phi)\cos^{2N-1}(\phi).
+\end{align}
+Thus, for small $\phi$, the Error-propagation formula (Equation~(\ref{eq:error_propagation})) yields
+\begin{align}
+    \left.(\Delta \phi_\text{sep})^2\right|_{\phi=0} = \lim_{\phi\to 0}\left[\frac{1-\cos^{2N}(\phi)}{4N^2 \sin^2(\phi) \cos^{2N-2}(\phi)}\right].
+\end{align}
+This expression can be evaluated by separating the terms and applying standard limit results
+\begin{align}
+    (\Delta \phi_\text{sep})^2 = \frac{1}{4N^2}\cdot \frac{1-\cos^{2N}(\phi)}{\phi^2}\cdot \frac{\phi^2}{\sin^2(\phi)}\cdot \frac{1}{\cos^{2N-2}(\phi)}.
+\end{align}
+Using the standard limits $\lim_{\phi\to 0} \frac{\sin(\phi)}{\phi}=1$ and therefore $\lim_{\phi\to 0} \frac{\phi^2}{\sin^2(\phi)}=1$ and $\lim_{\phi\to 0}\cos^{2N-2}(\phi) = 1$, it remains to evaluate
+$\lim_{\phi\to 0} \frac{1-\cos^{2N}(\phi)}{\phi^2}$ using l'Hôspital's rule
+\begin{align}
+    \lim_{\phi\to 0} \frac{1-\cos^{2N}(\phi)}{\phi^2} = \lim_{\phi\to 0} \frac{N\cos^{2N-1}(\phi)\sin(\phi)}{\phi} = N \lim_{\phi\to 0} \cos^{2N-1}(\phi) \lim_{\phi\to 0}\frac{\sin(\phi)}{\phi} = N.
+\end{align}
+Thus, we obtain
+\begin{align}
+    \left. (\Delta\phi_\text{sep})^2\right|_{\phi=0} = \frac{N}{4N^2}=\frac{1}{4N}.
+\end{align}
+
+\subsubsection{Entangled (GHZ) case}
+For the fully entangled case, a similar calculation gives
+\begin{align}
+    \left. (\Delta\phi_\text{ent})^2\right|_{\phi=0} =\frac{1}{4N^2}.
+\end{align}
+This illustrates the transition from standard quantum limit to Heisenberg scaling.
+
+\subsection{Argument 2: QCRB}
+\label{sec:arg2}
+
+By Equation (\ref{eq:fisher_pure_states}) we can calculate the QFI of the system by $I_Q[\rho, A]=4(\Delta A)^2$ with $A$ 
+being the Hamiltonian generating the dynamics of the system. We thus turn to evaluating the Hamiltonian of the two systems
+and then calculating its variance.
+
+\subsubsection{Separable case}
+Consider first the case for a single qubit:
+\begin{align}
+U_\text{total} = H U(\phi) H = H e^{i \phi Z} H = e^{i\phi(HZH)}=e^{i\phi X},
+\end{align}
+where we have used that for a unitary $U$ we can write $Ue^V U^\dagger=e^{U V U^\dagger}$ and the operator identity $HZH=X$.
+Thus, for a single qubit we have that
+\begin{align}
+    | \psi \rangle = U_\text{total} |0\rangle = e^{i \phi X} |0\rangle
+\end{align}
+so the generator is $\sigma_x$, the Pauli-X matrix \cite{pauliZurQuantenmechanikMagnetischen1927}.
+
+With $N$ parallel qubits we now have
+\begin{align}
+    U_\text{total}^{(N)}(\phi) = \bigotimes_{i=1}^N e^{i\phi X_i} = e^{i\phi \sum_{i=1}^N X_i}.
+\end{align}
+Accordingly, the generator for the separable case is $A=\sum_{i=1}^N \sigma_x^{(i)}$.
+
+The expectation of the generator can be calculated as follows. Since,
+\begin{align}
+    \langle \sigma_x \rangle = \langle \psi_0 | \sigma_x | \psi_0 \rangle 
+    = \langle 0 | \sigma_x | 0 \rangle = 0,
+\end{align}
+and
+\begin{align}
+    \sigma_x^2 = \mathbb I,
+\end{align}
+the identity matrix, we can use independence for $i\neq j$, to obtain
+\begin{align}
+    (\Delta A)^2 
+    = \sum_{i=1}^N (\Delta \sigma_x^{(i)})^2
+    = \sum_{i=1}^N \langle \left(\sigma_x^{(i)}\right)^2 \rangle - \langle \sigma_x^{(i)} \rangle^2
+    = \sum_{i=1}^N 1 - 0
+    = N.
+\end{align}
+Consequently,
+\begin{align}
+I_Q[\rho_{\text{sep}}, A] = 4N.
+\end{align}
+
+\subsubsection{Entangled (GHZ) case}
+For the entangled case, we have
+\begin{align}
+    | \psi \rangle 
+    = U^{\otimes N} | \text{GHZ} \rangle
+    = e^{i\phi \sum_{i=1}^N Z^{(i)}} | \text{GHZ} \rangle,
+\end{align}
+so the generator is $A = \sum_{i=1}^N \sigma_z^{(i)}$. Observing that,
+\begin{align}
+    &\sigma_z^{(i)} | 0 \rangle^{\otimes N} = | 0 \rangle^{\otimes N}, \\
+    &\sigma_z^{(i)} | 1 \rangle^{\otimes N} = -| 1 \rangle^{\otimes N},
+\end{align}
+we can conclude
+\begin{align}
+    \sigma_z^{(i)} | \text{GHZ} \rangle = \frac {1} {\sqrt 2} \left( | 0 \rangle^{\otimes N} -| 1 \rangle^{\otimes N} \right).
+\end{align}
+Using orthogonality we obtain
+\begin{align}
+    \langle \text{GHZ} | \sigma_z^{(i)} | \text{GHZ} \rangle
+    = \frac 1 2 (1 - 1)=0,
+\end{align}
+and therefore
+\begin{align}
+    \langle A \rangle = \sum_{i=1}^N \langle \text{GHZ} | \sigma_z^{(i)} | \text{GHZ} \rangle
+    = 0.
+\end{align}
+Furthermore, by observing
+\begin{align}
+    &\sigma_z^{(i)}\sigma_z^{(j)} |0\cdots 0\rangle = |0\cdots 0\rangle,
+    \quad \sigma_z^{(i)}\sigma_z^{(j)} |1\cdots 1\rangle = |1\cdots 1\rangle \\
+    \implies &\sigma_z^{(i)}\sigma_z^{(j)} | \text{GHZ} \rangle = | \text{GHZ} \rangle,
+\end{align}
+for $i \neq j$, and recalling, $\sigma_z^2 = \mathbb I$, we can write
+\begin{align}
+    \langle A^2 \rangle 
+    = \sum_{i=1}^N \langle (\sigma_z^{(i)})^2 \rangle 
+    + \sum_{i\neq j} \langle \sigma_z^{(i)} \sigma_z^{(j)} \rangle
+    = \sum_{i=1}^N 1
+    + \sum_{i\neq j} 1
+    = N + N(N-1) = N^2.
+\end{align}
+Similarly to the separable case, we receive
+\begin{align}
+    (\Delta A)^2 = \langle A^2 \rangle - \langle A \rangle^2 = N^2,
+\end{align}
+meaning that the Fisher information is given as
+\begin{align}
+% &I_Q[\phi_\text{sep}] = 4N\\
+&I_Q[\phi_\text{ent}] = 4N^2.
+\end{align}
+Theorem \ref{thm:qcrb} then implies that
+\begin{align}
+    &(\Delta \hat \phi_\text{sep})^2 \geq \frac 1 {4mN}
+    \label{eq:qcrb-sep} \\
+    &(\Delta \hat \phi_\text{ent})^2 \geq \frac 1 {4mN^2},
+    \label{eq:qcrb-ent}
+\end{align}
+for $m$ independent measurement runs, thereby again confirming the difference between SQL and HL scaling.
+
+
+As seen in Argument 1 (Section~\ref{sec:arg1}), the error-propagation variances approach
+the QCRB values in Equations~(\ref{eq:qcrb-sep}, \ref{eq:qcrb-ent}) as $\phi\to0$.
+Since the derived property plays an important role in the numerical analysis presented 
+later we state it explicitly:
+\begin{fact}
+% On their identifiable branches, the estimators in Equations~(\ref{eq:est-sep}) and~(\ref{eq:est-ent})
+% asymptotically attain the corresponding QCRB values in Equations~(\ref{eq:qcrb-sep})
+% and~(\ref{eq:qcrb-ent}) as $m\to\infty$; the small-$\phi$ limits reproduce the SQL and HL expressions derived above.
+At regular interior points of their identifiable branches, the estimators in Equations~(\ref{eq:est-sep}) and~(\ref{eq:est-ent}) 
+asymptotically attain the classical Cramér-Rao bounds of their respective binary measurements as $m\to\infty$. 
+For the entangled estimator, this bound equals the QCRB throughout the regular interior. 
+For the separable all-zero estimator, it approaches the QCRB as $\phi\to0$, reproducing the SQL and HL scalings derived above.
+\end{fact}
+
+\subsection{Argument 3: Maximum-likelihood estimator}
+Zheng et al. show in \cite{zhengQuantumPhaseEstimation2022} that, for a binary-outcome experiment, an inversion estimator associated with an optimal measurement is equivalent to the maximum-likelihood estimator (MLE) and asymptotically attains the QCRB. In our case, the experiments also have binary outcomes, with inversion estimators given by Equations~(\ref{eq:est-sep}) and~(\ref{eq:est-ent}). On their respective identifiable branches, the response probabilities are one-to-one functions of $\phi$. Maximizing the binomial likelihood is therefore equivalent to substituting the observed outcome frequency into the inverse response function, so these inversion estimators are also the corresponding MLEs.
+
+At regular interior points, the MLEs asymptotically attain the classical Cramér--Rao bounds associated with the measurements being performed. As shown in Argument~2 (Section~\ref{sec:arg2}), the readout
+\begin{align}
+    M = |0\cdots0\rangle\langle0\cdots0|
+\end{align}
+approaches QFI optimality in the small-$\phi$ limit. Consequently, the asymptotic variances of the estimators in Equations~(\ref{eq:est-sep}) and~(\ref{eq:est-ent}) approach the corresponding QCRB values in this limit.
+
+More generally, according to \cite{tothQuantumMetrologyQuantum2014}, a locally optimal measurement at a specified parameter value $\phi_0$ can be constructed from the eigenbasis of an SLD $L_{\phi_0}$. For a pure state,
+\begin{align}
+    L_{\phi_0}
+    =
+    2i\left[
+        |\psi(\phi_0)\rangle\langle\psi(\phi_0)|,A
+    \right].
+    \label{eq:sld}
+\end{align}
+For the separable protocol, the initial state and generator are
+\begin{align}
+    |\psi_0\rangle &= |0\rangle^{\otimes N}, \\
+    A &= \sum_{i=1}^{N}\sigma_x^{(i)}.
+\end{align}
+Evaluating this SLD at $\phi_0=0$ shows that a compatible locally optimal readout is obtained by measuring each qubit in the $Y$ basis, represented by
+\begin{align}
+    M_{\mathrm{sep}}^{(Y)}
+    =
+    \sum_{n=1}^{N}\sigma_y^{(n)}.
+\end{align}
+
+For the entangled protocol,
+\begin{align}
+    |\psi_0\rangle &= |\mathrm{GHZ}\rangle, \\
+    A &= \sum_{i=1}^{N}\sigma_z^{(i)},
+\end{align}
+and a compatible $Y$-type parity readout can be chosen as
+\begin{align}
+    M_{\mathrm{ent}}^{(Y)}
+    =
+    -\sigma_y^{(1)}
+    \otimes
+    \bigotimes_{i=2}^{N}\sigma_x^{(i)}.
+\end{align}
+The overall sign only exchanges the two outcome labels. A direct calculation of the corresponding outcome probabilities shows that the classical Fisher informations of these readouts equal the respective QFIs, $4N$ and $4N^2$, at regular parameter values. Inverting their response probabilities on suitable identifiable local branches gives corresponding readout-specific MLEs that asymptotically attain the QCRB.
+
+The detailed derivation of these alternative likelihoods and estimators is beyond the scope of this thesis. Moreover, the statement is branchwise and does not remove the periodicity of the likelihood or make $\phi$ globally identifiable. The numerical analysis below therefore retains the straightforward all-zero readout and the estimators in Equations~(\ref{eq:est-sep}) and~(\ref{eq:est-ent}).
+
+
+
+
+\section{Numerical verification of the theoretical model}
+\label{sec:theory:numerical-results}
+This section (i) numerically verifies the asymptotic behavior of the
+estimators and (ii) evaluates their performance outside the asymptotic regime in which the estimators approach the QCRB, 
+i.e.\ for a small number of $U(\phi)$ gates $N$ and 
+independent measurements $m$. For all experiments the true parameter value is fixed to $\phi=0.05$. 
+The simulations combine the analytic readout probabilities derived above with 
+Monte Carlo sampling to simulate the protocols numerically.
+For each choice of $N$ and $m$ we estimate the parameter $\phi$ from the quantum
+circuit. This process is repeated $R$ times and the average absolute error 
+$d(\phi, \hat\phi) = | \phi - \hat\phi|$ and the sample variance of the $R$ 
+estimates are recorded.
+Algorithm \ref{alg:simulate-protocol} summarizes the simulation procedure for the entangled protocol.
+The binomial sampling arises from the fact that we are performing $m$ ``0/1'' or Bernoulli experiments.
+Efficient implementations exist for sampling from a binomial distribution, Python code implementing the pseudocode procedure
+can be found in Appendix \ref{app:appendix}.
+The separable curves follow the same procedure with $p_0=\cos^{2N}(\phi)$ and the estimator of
+Equation~(\ref{eq:est-sep}).
+Figure \ref{fig:numana:sepvsent} uses $N\in\{8,15,30\}$ and sweeps $m$ up to $4{,}000$ at $R=300$
+repetitions per point, whereas Figure \ref{fig:numana:over-n} fixes $m=500$ and sweeps $N$ up to
+$37$ at $R=1{,}000$. 
+% Both figures therefore report Monte Carlo estimates at these repetition
+% counts, and the residual scatter of the plotted curves is sampling noise rather than structure.
+
+
+% \begin{algorithm}
+%     \caption{Simulation of the phase estimation procedure, entangled case}
+%     \label{alg:simulate-protocol}
+%     \begin{algorithmic}[1]
+%         \Procedure{SimulateEntangledProtocol}{\textit{$\phi$}, \textit{R}, \textit{$m_\text{max}$}, $N$}
+%             \For{$m = 1$ to \textit{$m_\text{max}$}}
+%                 \State Initialize empty list \textit{estimates}
+%                 \For{$r = 1$ to \textit{R}}
+%                     \State Perform $m$ Bernoulli trials with probability $p_0 = \cos^2(N\phi)$ for "0" outcome
+%                     \State Compute $\hat p_0$ from the fraction of "0"s
+%                     \State Compute $\hat\phi_r$ from $\hat p_0$ using $\hat \phi_r = \frac 1 N \cdot \arccos(\sqrt{\hat p_0})$
+%                     \State Append $\hat\phi_r$ to \textit{estimates}
+%                 \EndFor
+%                 \State Compute mean absolute error $| \phi - \hat\phi |$ and sample variance from \textit{estimates}
+%             \EndFor
+%             \State \Return mean absolute errors and variances
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+% \begin{algorithm}
+%     \caption{Simulation of the phase estimation procedure, entangled case}
+%     \label{alg:simulate-protocol}
+%     \begin{algorithmic}[1]
+%         \Procedure{SimulateEntangledProtocol}{\textit{$\phi$}, \textit{R}, \textit{$m_\text{max}$}, $N$}
+%             \For{$m = 1$ to \textit{$m_\text{max}$}}
+%                 \State Initialize empty list \textit{estimates}
+%                 \For{$r = 1$ to \textit{R}}
+%                     \State Compute probability of a "0" outcome $\hat p_0$ using $\hat p_0=\mathrm{Pr}(X=0)$, where $X$ follows a binomial distribution $X\sim \mathcal B(\cos^2(N \phi), m)$.
+%                     \State Compute $\hat\phi_r$ from $\hat p_0$ using $\hat \phi_r = \frac 1 N \cdot \arccos(\sqrt{\hat p_0})$
+%                     \State Append $\hat\phi_r$ to \textit{estimates}
+%                 \EndFor
+%                 \State Compute mean absolute error $| \phi - \hat\phi |$ and sample variance from \textit{estimates}
+%             \EndFor
+%             \State \Return mean absolute errors and variances
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+
+\begin{algorithm}
+    \caption{Simulation of the phase estimation procedure, entangled case}
+    \label{alg:simulate-protocol}
+    \begin{algorithmic}[1]
+        \Procedure{SimulateEntangledProtocol}{$\phi$, $R$, $m_\text{max}$, $N$}
+            \State $p_0 \gets \cos^2(N\phi)$ \Comment{true probability of a ``0'' outcome (entangled circuit)}
+            \State Initialize empty lists \textit{MAE}, \textit{Var}
+            \For{$m = 1$ to $m_\text{max}$}
+                \State Initialize empty list \textit{estimates}
+                \For{$r = 1$ to $R$}
+                    \State Draw number of ``0'' outcomes from a binomial distribution $k \sim \mathcal{B}(m,\, p_0)$
+                    \State $\hat p_0 \gets k / m$ \Comment{empirical frequency estimate of $p_0$}
+                    \State $\hat\phi_r \gets \dfrac{1}{N}\arccos\!\big(\sqrt{\hat p_0}\big)$
+                    \State Append $\hat\phi_r$ to \textit{estimates}
+                \EndFor
+                % \State $\bar\phi \gets \dfrac{1}{R}\sum_{r=1}^{R}\hat\phi_r$
+                % \State Append $\dfrac{1}{R}\sum_{r=1}^{R}\lvert \hat\phi_r - \phi\rvert$ to \textit{MAE} \Comment{mean absolute error at $m$ shots}
+                % \State Append $\dfrac{1}{R-1}\sum_{r=1}^{R}(\hat\phi_r - \bar\phi)^2$ to \textit{Var} \Comment{sample variance of the estimates}
+                \State Append $\dfrac{1}{R}\sum_{r=1}^{R}\lvert \hat\phi_r - \phi\rvert$ to \textit{MAE}
+                \State Append sample variance of \textit{estimates} to \textit{Var}
+            \EndFor
+            \State \Return \textit{MAE}, \textit{Var}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+Prior to presenting the numerical results, we define the performance
+metrics used throughout this section. The estimator variance is a fundamental quantity throughout, as it
+characterizes the statistical fluctuations of the measurement outcomes and
+allows for comparison with the QCRB whenever applicable.
+When evaluating and comparing quantum metrology protocols 
+from an algorithmic perspective, however, the main quantity of interest is the rate at which the
+estimation error decreases with respect to the available resources.
+Accordingly, the absolute error directly indicates how efficiently a
+protocol translates experimental resources into accurate parameter estimates.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{fig/all_plots3.png}
+    % \includegraphics[width=\textwidth]{fig/numerical_comp_3.png}
+    \caption{Simulating parameter $\hat \phi$ for three choices of $N$ over a range of $m$ 
+    for the separable and entangled protocols. Top row shows
+    the absolute error, bottom row shows the sample variance of the estimates with
+    the QCRB overlaid. As a second horizontal axis the cost of the simulation
+    $C=m\cdot N$ is given.}
+    \label{fig:numana:sepvsent}
+\end{figure}
+
+Figure \ref{fig:numana:sepvsent} presents simulation results for three choices of $N$ across 
+a range of measurements $m$.
+In all cases, the entangled protocol clearly outperforms the separable protocol.
+The bottom row further indicates that the estimator variance closely 
+approaches the QCRB, even for moderate values of $N$ and $m$.
+Figure \ref{fig:numana:over-n} shows the same metrics as functions of the number of  
+$U(\phi)$ gates $N$. Again, the estimator variance closely approaches the QCRB.
+As expected from the underlying assumptions, the entangled estimator
+breaks down as $N \phi > \pi/2$.
+
+% Because $\arccos$ is bounded by $|\arccos(x)| \leq \pi$, the entangled estimator satisfies
+% \begin{align}
+% \lim_{N\to\infty} \hat\phi_\text{ent}^{(N)} = \lim_{N\to\infty} \frac 1 N  \arccos(\sqrt {p_0}) = 0,
+% \label{eq:est-conv}
+% \end{align}
+% implying that the estimator converges to zero. Once the optimal
+% choice of $N$ is exceeded, we expect estimates to tend to zero.
+Because $\sqrt{p_0} \in [0,1]$ and $\arccos$ maps $[0,1]$ onto $[0,\pi/2]$, every estimate obeys
+\begin{align}
+  0 \;\leq\; \hat\phi_{\text{ent}}^{(N)} \;=\; \frac{1}{N}\arccos\!\bigl(\sqrt{p_0(N)}\bigr)
+    \;\leq\; \frac{\pi}{2N},
+  \label{eq:est-bound}
+\end{align}
+where $p_0(N) = \cos^2(N\phi)$. The numerator is bounded while $1/N$ vanishes, so
+\begin{align}
+  \lim_{N\to\infty} \hat\phi_{\text{ent}}^{(N)} = 0,
+  \label{eq:est-conv}
+\end{align}
+although the approach is not monotone: by \eqref{eq:folded-estimator} the estimator zig-zags within
+the envelope $\pi/(2N)$. For what follows, \eqref{eq:est-bound} is the more useful statement,
+because it holds at every finite $N$: as soon as $N\phi > \pi/2$, that is as soon as $N$ exceeds
+$N_\text{opt}:=\lfloor\pi/(2\phi)\rfloor$, it gives $\hat\phi_{\text{ent}}^{(N)} \leq \pi/(2N) < \phi$, so an overshooting
+probe necessarily reports a phase below the true one.
+Here, $N_\text{opt}$ denotes only the largest phase-gate count on the chosen non-aliasing branch, not a universal optimum under a finite budget.
+
+
+This property will be employed in Section \ref{sec:methodology} to detect
+when the branch-valid phase-gate count $N_\text{opt}$ has been ``overshot''.
+In the present setting this yields $N_\text{opt}=31$.
+Although the separable protocol performs worse in the relevant resource regime, it does not suffer from overshooting, meaning 
+that for extremely large $N$ ($N \sim 1000$) it can achieve a lower error than the entangled protocol for a fixed $N$.
+For the parallel separable implementation considered here, these $N$ phase gates directly require $N$ simultaneously operated qubits;
+$N\sim1000$ is therefore far beyond current experimental capabilities and is not considered further.
+% This qubit-count statement does not apply to the sequential implementation, which reuses one qubit for $N$ coherent phase-gate interactions 
+% and is constrained instead by coherence time, gate errors, and elapsed time.
+
+Figures \ref{fig:numana:sepvsent} and \ref{fig:numana:over-n} also include the 
+cost $C=Nm$ as a secondary horizontal axis. 
+While cost optimization is not the focus of the present section, it will
+become the principal objective in Section \ref{sec:results}. 
+Defined as $C=N\cdot m$, it counts the total number of applications of the $U(\phi)$ gate across $m$ independent repetitions.
+
+The spike in sample variance of the entangled estimator in Figure \ref{fig:numana:over-n} can be explained by the fact that 
+in the infinite-shot limit, the entangled estimator simplifies to:
+\begin{align}
+\hat\phi_N = \frac 1 N \arccos(|\cos(N\phi)|),\label{eq:folded-estimator}
+\end{align}
+accurately reducing to $\hat\phi_N=\phi$ in the estimator's assumed regime of validity: $0 \leq N \phi \leq \pi/2$, but representing a non-smooth sawtooth shape,
+whenever $\phi > \frac{\pi}{2N}$. 
+% This non-smoothness explains the upspike as $N$ surpasses $N_\text{opt}=31$ and thus the estimator's regime of validity.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{fig/na_over_N_3.png}
+    \caption{Simulating $\hat\phi$ using the separable vs entangled protocol for fixed $m$ over
+    varying number of $U(\phi)$ gates $N$. The left plot shows the absolute
+    error of the simulation, whereas the right plot shows the variance.
+    $\hat\phi_\text{ent}$ must be disregarded as $N$ surpasses $31$, as the 
+    necessary assumptions are violated.}
+    \label{fig:numana:over-n}
+\end{figure}
+
+In summary, the numerical analysis provides finite-sample evidence 
+for an advantage in absolute estimation error and sample variance over the tested parameter range.
+% that the entangled protocol outperforms the separable protocol
+% not only asymptotically, but also outside the regime in which 
+% theoretical performance guarantees apply.
+This effect is consistent with the entangled protocol's higher Fisher information,
+which yields superior performance both in the limit and for small $N$ and $m$.
+% Remarkably, the advantage extends to the absolute
+% estimation error, about which the QCRB does not allow any a priori statements.
+% Future work could aim to derive analytically the results observed in
+% the numerical experiments, potentially via concentration inequalities.
+This conclusion is empirical: the QFI and QCRB alone do not imply an ordering in mean absolute error.
+
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

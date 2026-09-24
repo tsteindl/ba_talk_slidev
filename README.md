@@ -80,6 +80,10 @@ The included GitHub Actions workflow runs `npm ci` and `npm run build` on Ubuntu
 - `pages/supplementary.md` contains the hand-designed overview and theory backup slides.
 - `pages/generated-supplementary.md` is generated from LaTeX-rendered thesis crops and thesis figures.
 - `components/EstimatorStory.vue` draws and animates the estimator pipeline.
+- `components/BranchBounds.vue` animates how the phase prior `[0.01, 0.1]` becomes the admissible range `N = 15 … 157`.
+  A slide gets an animated figure by naming it in `talk-core.js` — `{figure:'BranchBounds', clicks:4}` — and registering
+  it in the `figures` map in `components/TalkBody.vue`. Click counts come from `data-fragment-index` markers in the slide
+  body, so a slide whose clicks live inside a component has to declare `clicks` explicitly.
 - `src/talk-core.js` contains the more elaborate deterministic figures.
 - `styles/index.css` controls the visual system.
 - `openings/*.md` contains the optional opening modules.
@@ -117,6 +121,29 @@ npm run supplementary:generate
 ```
 
 Rebuild `thesis/main-thesis.pdf` with the normal thesis LaTeX pipeline before running these commands. The renderer locates every algorithm and table caption in that PDF, crops the compiled output, and fails if an expected caption is missing or ambiguous. Slidev displays those crops directly; it does not reinterpret the pseudocode or reconstruct the tables. Do not edit the generated slide page or crop images by hand. The committed assets make the presentation reproducible on the tower even when the thesis repository is not checked out there.
+
+Three of those steps exist because a slide is smaller than a thesis page:
+
+```sh
+python scripts/rebalance_split_crops.py     # after render_backup_assets.py
+python scripts/render_talk_tables.py        # needs pdflatex; --refresh re-runs the generator
+python scripts/render_talk_theorems.py      # needs pdflatex
+```
+
+`rebalance_split_crops.py` re-cuts the two-part crops of Algorithm 4 and Algorithm 6 so both halves are the same height. The hand-picked split left the first half much taller than the second, and `object-fit: contain` then shrank it the hardest, so the linear- and binary-search pseudocode was the smallest type in the deck.
+
+`render_talk_tables.py` re-typesets the handful of tables whose thesis caption runs several lines — 3.1, 4.1, 4.2, 4.4, B.2 and C.2. It takes the `tabular` from `analysis/thesis_tables.py` unchanged, gives it a short one-line caption, drops the explanatory footnote, and compiles it with `standalone` so the bounding box hugs the table. **Match the thesis font**: `lmodern`, which is the Latin Modern that `scrbook` gives you, not the default of `article` on a bare TeX install. `pdffonts` on the output should list the same `LMRoman*`/`LMMathItalic*` families as the corresponding page of the thesis PDF. A no-root TeX Live (TinyTeX) is enough:
+
+```sh
+wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+tlmgr install koma-script booktabs makecell multirow standalone lm amsmath
+```
+
+`render_talk_theorems.py` compiles each environment of `sources/theorems.tex` on its own and writes `theorem-*.png`, so the backup section shows the thesis statements verbatim rather than a retyped paraphrase. It fills in the thesis numbering and cross-references by hand (`NUMBERS`, `REFS` in the script), because a single environment compiled alone has no counters; check them against the thesis after renumbering.
+
+The backup section is deliberately thin: exact statements, exact pseudocode, exact tables, thesis figures, plus one derivation (the sequential protocol) that the main talk only alludes to. Anything already shown in the main talk does not belong there — `generate-supplementary.mjs` keeps a `used` set of figures for exactly that reason, and it has to be updated when a figure moves into the main talk.
+
+The tables it re-typesets are marked `"rendered": "talk"` in `sources/backup-crops.json`, and the slide generator credits them as re-typeset rather than as exact crops. Every other table and all pseudocode stay exact crops of the thesis PDF.
 
 ## Citations and references
 

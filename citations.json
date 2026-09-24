@@ -1,21 +1,43 @@
 {
-  "main-2": ["giovannettiQuantumMetrology2006", "parisQuantumEstimationQuantum2008a"],
-  "main-4": ["giovannettiQuantumMetrology2006"],
-  "main-5": ["giovannettiQuantumMetrology2006", "parisQuantumEstimationQuantum2008a", "liuQuantumFisherInformation2020a"],
-  "main-6": ["giovannettiQuantumMetrology2006"],
-  "main-18": ["johnson1994continuous", "2020SciPy-NMeth"],
-  "main-19": ["wilsonProbableInferenceLaw1927"],
-  "derivation-pipeline": ["nielsenQuantumComputationQuantum2012"],
-  "derivation-one": ["nielsenQuantumComputationQuantum2012"],
-  "derivation-separable": ["giovannettiQuantumMetrology2006", "wilkensQuantumCircuitLibrary2023"],
-  "derivation-ghz": ["giovannettiQuantumMetrology2006", "wilkensQuantumCircuitLibrary2023"],
-  "derivation-comparison": ["koflerQuantumMetrology"],
-  "supp-qfi": ["parisQuantumEstimationQuantum2008a", "liuQuantumFisherInformation2020a"],
-  "supp-scaling": ["giovannettiQuantumMetrology2006", "giovannettiAdvancesQuantumMetrology2011"],
-  "supp-delta": ["doobLimitingDistributionsCertain1935"],
-  "supp-asymptotic": ["doobLimitingDistributionsCertain1935", "cramer1946mathematical"],
-  "supp-posterior": ["johnson1994continuous", "bayesEssaySolvingProblem1764"],
-  "supp-safeguard": ["johnson1994continuous", "2020SciPy-NMeth"],
-  "supp-performance": ["wilsonProbableInferenceLaw1927"],
-  "supp-detector": ["DU04", "shevtsovaAbsoluteConstantsBerryEsseen2011"]
+  "backup-probability-estimate": [
+    "giovannettiQuantumMetrology2006",
+    "parisQuantumEstimationQuantum2008a"
+  ],
+  "main-2": [
+    "giovannettiQuantumMetrology2006",
+    "parisQuantumEstimationQuantum2008a",
+    "liuQuantumFisherInformation2020a"
+  ],
+  "main-5": [
+    "giovannettiQuantumMetrology2006"
+  ],
+  "main-20": [
+    "johnson1994continuous",
+    "2020SciPy-NMeth"
+  ],
+  "main-22": [
+    "wilsonProbableInferenceLaw1927"
+  ],
+  "derivation-pipeline": [],
+  "derivation-one": [
+    "wilkensQuantumCircuitLibrary2023"
+  ],
+  "derivation-separable": [
+    "giovannettiQuantumMetrology2006",
+    "wilkensQuantumCircuitLibrary2023"
+  ],
+  "derivation-ghz": [
+    "giovannettiQuantumMetrology2006",
+    "wilkensQuantumCircuitLibrary2023"
+  ],
+  "derivation-comparison": [
+    "koflerQuantumMetrology"
+  ],
+  "supp-sequential": [
+    "giovannettiQuantumMetrology2006",
+    "wilkensQuantumCircuitLibrary2023"
+  ],
+  "supp-theorem-pilot": [
+    "johnson1994continuous"
+  ]
 }

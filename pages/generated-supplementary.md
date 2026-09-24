@@ -1,12 +1,52 @@
 ---
+class: supplement latex-crop-slide
+---
+
+<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+
+<img src="/assets/backup-latex/theorem-thm-qcrb.png" alt="Theorem 2.5.1 — QFI bound for an error-propagation estimator">
+
+---
+class: supplement latex-crop-slide
+---
+
+<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+
+<img src="/assets/backup-latex/theorem-thm-delta-method.png" alt="Theorem 2.6.2 — Delta Method">
+
+---
+class: supplement latex-crop-slide
+---
+
+<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+
+<img src="/assets/backup-latex/theorem-lemma-asymp-dist-est.png" alt="Lemma 2.6.3 — Asymptotic distribution of the entangled estimator">
+
+---
+class: supplement latex-crop-slide
+---
+
+<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+
+<img src="/assets/backup-latex/theorem-thm-asympt-dist-given-pilot.png" alt="Theorem 3.2.1">
+
+<SlideCite id="supp-theorem-pilot" />
+
+---
+class: supplement latex-crop-slide
+---
+
+<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+
+<img src="/assets/backup-latex/theorem-thm-stat-safeguard.png" alt="Theorem 3.2.2">
+
+---
 class: supplement supplement-divider
 ---
 
 <div class="supp-tag">SUPPLEMENT</div>
 
-# Exact pseudocode
-
-<p>rendered by the thesis LaTeX compiler</p>
+# Algorithms pseudocode
 
 ---
 class: supplement latex-crop-slide
@@ -16,7 +56,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-01.png" alt="Algorithm 1 Simulation">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 18</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 18.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -26,7 +68,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-02.png" alt="Algorithm 2 Simulate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 21</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 21.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -36,7 +80,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-03.png" alt="Algorithm 3 Estimate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 22</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 22.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -46,7 +92,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-04a.png" alt="Algorithm 4 Estimate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 24</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 24.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -56,7 +104,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-04b.png" alt="Algorithm 4 Estimate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 24</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 24.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -66,7 +116,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-05.png" alt="Algorithm 5 Statistical">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 29</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 29.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -76,7 +128,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-06a.png" alt="Algorithm 6 Simulate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 30</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 30.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -86,7 +140,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-06b.png" alt="Algorithm 6 Simulate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 30</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 30.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -96,7 +152,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/algorithm-07.png" alt="Algorithm 7 Estimate">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 31</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 31.
+-->
 
 ---
 class: supplement supplement-divider
@@ -104,9 +162,7 @@ class: supplement supplement-divider
 
 <div class="supp-tag">SUPPLEMENT</div>
 
-# Generated tables
-
-<p>rendered by the thesis LaTeX compiler</p>
+# Thesis tables
 
 ---
 class: supplement latex-crop-slide
@@ -116,7 +172,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-03-01.png" alt="Table 3.1:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 26</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -126,7 +184,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-04-01.png" alt="Table 4.1:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 33</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -136,7 +196,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-04-02.png" alt="Table 4.2:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 34</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -146,7 +208,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-04-03.png" alt="Table 4.3:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 34</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 34.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -156,7 +220,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-04-04.png" alt="Table 4.4:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 36</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -166,7 +232,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-04-05.png" alt="Table 4.5:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 38</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 38.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -176,7 +244,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-04-06.png" alt="Table 4.6:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 39</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 39.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -186,7 +256,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-b-01a.png" alt="Table B.1:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 53</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 53.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -196,7 +268,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-b-01b.png" alt="Table B.1:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 53</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 53.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -206,7 +280,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-b-02a.png" alt="Table B.2:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 54</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -216,7 +292,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-b-02b.png" alt="Table B.2:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 54</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -226,7 +304,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-b-03.png" alt="Table B.3:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 55</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 55.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -236,7 +316,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-c-01.png" alt="Table C.1:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 56</p>
+<!--
+Exact crop from thesis/main-thesis.pdf, PDF page 56.
+-->
 
 ---
 class: supplement latex-crop-slide
@@ -246,7 +328,9 @@ class: supplement latex-crop-slide
 
 <img src="/assets/backup-latex/table-c-02.png" alt="Table C.2:">
 
-<p class="generated-source">Exact crop from thesis/main-thesis.pdf, PDF page 56</p>
+<!--
+Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+-->
 
 ---
 class: supplement supplement-divider
@@ -255,32 +339,6 @@ class: supplement supplement-divider
 <div class="supp-tag">SUPPLEMENT</div>
 
 # Thesis figures
-
-<p>remaining figures not already used in the main talk</p>
-
----
-class: supplement thesis-figure-slide
----
-
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
-
-# Sequential phase-gate uses
-
-<img src="/assets/thesis/1qubit many uses.drawio.png" alt="Sequential phase-gate uses">
-
-<p class="generated-source">Source: thesis/fig/1qubit many uses.drawio.png</p>
-
----
-class: supplement thesis-figure-slide
----
-
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
-
-# Estimator convergence with increasing shots
-
-<img src="/assets/thesis/all_plots3.png" alt="Estimator convergence with increasing shots">
-
-<p class="generated-source">Source: thesis/fig/all_plots3.png</p>
 
 ---
 class: supplement thesis-figure-slide
@@ -292,8 +350,6 @@ class: supplement thesis-figure-slide
 
 <img src="/assets/thesis/fig_algorithm_diagnostics.png" alt="Algorithm diagnostics">
 
-<p class="generated-source">Source: thesis/fig/fig_algorithm_diagnostics.png</p>
-
 ---
 class: supplement thesis-figure-slide
 ---
@@ -304,20 +360,6 @@ class: supplement thesis-figure-slide
 
 <img src="/assets/thesis/fig_error_variance.png" alt="Estimator error and variance">
 
-<p class="generated-source">Source: thesis/fig/fig_error_variance.png</p>
-
----
-class: supplement thesis-figure-slide
----
-
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
-
-# Advantage under tighter precision
-
-<img src="/assets/thesis/fig_precision.png" alt="Advantage under tighter precision">
-
-<p class="generated-source">Source: thesis/fig/fig_precision.png</p>
-
 ---
 class: supplement thesis-figure-slide
 ---
@@ -327,29 +369,3 @@ class: supplement thesis-figure-slide
 # Convergence versus budget
 
 <img src="/assets/thesis/fig_story.png" alt="Convergence versus budget">
-
-<p class="generated-source">Source: thesis/fig/fig_story.png</p>
-
----
-class: supplement thesis-figure-slide
----
-
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
-
-# Protocol error versus phase-gate uses
-
-<img src="/assets/thesis/na_over_N_3.png" alt="Protocol error versus phase-gate uses">
-
-<p class="generated-source">Source: thesis/fig/na_over_N_3.png</p>
-
----
-class: supplement thesis-figure-slide
----
-
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
-
-# Quantum-metrology workflow
-
-<img src="/assets/thesis/qm.png" alt="Quantum-metrology workflow">
-
-<p class="generated-source">Source: thesis/fig/qm.png</p>

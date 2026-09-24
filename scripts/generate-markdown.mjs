@@ -5,15 +5,16 @@ import { buildOpeningModules } from '../src/openings.js'
 const modules = buildOpeningModules({ m, eq, states, svg, chart, text, line, circle, pipeline, ink, teal, blue, gray })
 const config = src => `---\ntheme: default\ntitle: Evaluating adaptive quantum metrology protocols\ncolorSchema: light\ncanvasWidth: 1280\naspectRatio: 16/9\ntransition: none\nfonts:\n  provider: none\nmdc: true\nsrc: ${src}\n---\n`
 const clicks = body => Math.max(-1, ...[...body.matchAll(/data-fragment-index="(\d+)"/g)].map(x => +x[1])) + 1
-const note = text => `<!--\n${text.replaceAll('--', '—')}\n-->`
+const note = text => (text || '').trim() ? `<!--\n${text.replaceAll('--', '—')}\n-->` : ''
 
 function content(slide, { number, module = '', index = 0, first = false } = {}) {
-  const n = clicks(slide.body)
+  const n = slide.clicks ?? clicks(slide.body)
   const frontmatter = first
     ? (n ? `---\nclicks: ${n}\n---\n\n` : '')
     : (n ? `---\nclicks: ${n}\n---\n\n` : `---\n\n`)
   const title = slide.title ? `# ${slide.title}\n\n` : ''
-  return `${frontmatter}${title}<TalkBody :number="${number || 1}"${module ? ` module="${module}" :index="${index}"` : ''} :clicks="$clicks" :page="$page" />\n\n${note(slide.notes)}`
+  const notes = note(slide.notes)
+  return `${frontmatter}${title}<TalkBody :number="${number || 1}"${module ? ` module="${module}" :index="${index}"` : ''} :clicks="$clicks" :page="$page" />${notes ? `\n\n${notes}` : ''}`
 }
 
 mkdirSync(new URL('../pages/', import.meta.url), { recursive: true })

@@ -12,12 +12,7 @@ src: ./pages/title.md
 ---
 
 ---
-src: ./openings/ice.md
 src: ./openings/sun-angle.md
----
-
----
-src: ./pages/main.md#1
 ---
 
 ---
@@ -25,7 +20,11 @@ src: ./pages/estimator-derivation.md
 ---
 
 ---
-src: ./pages/main.md#2-22
+src: ./pages/main.md
+---
+
+---
+src: ./pages/references.generated.md
 ---
 
 ---
@@ -34,8 +33,4 @@ src: ./pages/supplementary.md
 
 ---
 src: ./pages/generated-supplementary.md
----
-
----
-src: ./pages/references.generated.md
 ---

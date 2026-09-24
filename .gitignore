@@ -6,3 +6,5 @@ qa/*.pdf
 qa/*.json
 slides-export.pdf
 *.log
+__pycache__/
+*.pdf

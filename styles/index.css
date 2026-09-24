@@ -26,7 +26,7 @@ body,.slidev-layout { background:var(--paper); color:var(--ink); }
 .opening-scene { display:grid; grid-template-columns:680px 1fr; align-items:center; gap:60px; height:435px; }.opening-image { display:block; object-fit:contain; }.oven-art { width:650px; height:435px; }.pumpkin-art { width:680px; height:435px; }.opening-prompt p { margin-top:12px!important; font-size:28px; }.opening-rule { width:80px; height:2px; background:var(--line); margin:30px 0; }
 .cookie { background-image:url('/assets/openings/cookie-references.png'); background-size:400% auto; background-repeat:no-repeat; width:240px; height:240px; }.mystery-cookie { display:flex; align-items:center; justify-content:center; gap:25px; height:165px; }.mystery-cookie .cookie { width:175px; height:175px; }.cookie-reference-row { display:flex; justify-content:space-between; gap:22px; margin-top:14px; }.cookie-reference { position:relative; text-align:center; padding:8px; }.cookie-reference p { font-size:31px; margin-top:2px!important; }.reference-match { position:absolute; inset:0; border:3px solid var(--teal); border-radius:18px; }
 .opening-response { display:grid; grid-template-columns:255px 1fr; align-items:center; gap:35px; }.response-object { text-align:center; }.response-object .cookie { margin:auto; }.response-object .equation { font-size:35px; margin:5px 0 12px; }.opening-response .replacement,.pumpkin-response .replacement { height:305px; }.opening-calibration { height:305px; }.opening-footnote { text-align:right; font-size:17px; margin-top:24px!important; }.soup-scale { display:block; width:100%; height:155px; margin-top:-13px; }.opening-illustration { display:block; height:430px; }.ice-readout { width:195px; height:185px; }
-.analogy-bridge .pipeline { margin-top:60px; gap:8px; }.analogy-bridge .pipeline .node { min-width:100px; }.analogy-bridge .pipeline .symbol { font-size:41px; }.analogy-bridge .pipeline .experiment { font-size:26px; padding:18px 15px; }.analogy-bridge .pipeline .experiment span { display:block; font-size:22px; }.analogy-bridge .bridge-cookie { width:115px; height:115px; margin:auto; }.bridge-photo { width:170px; height:115px; margin:auto; object-fit:cover; }.opening-inference .equation { margin:40px 0 0; }.opening-takeaway { font-size:30px; margin-top:35px!important; }.compact-bridge .pipeline { margin-top:20px; }.compact-bridge .pipeline .symbol { font-size:28px; }.compact-bridge .pipeline .experiment { font-size:22px; padding:10px 14px; }.compact-bridge .pipeline .caption { font-size:15px; margin-top:8px; }.compact-bridge .opening-takeaway { display:none; }
+.analogy-bridge .pipeline { margin-top:60px; gap:8px; }.analogy-bridge .pipeline .node { min-width:100px; }.analogy-bridge .pipeline .symbol { font-size:41px; }.analogy-bridge .pipeline .experiment { font-size:26px; padding:18px 15px; }.analogy-bridge .pipeline .experiment>span:not(.math):not(.math-eq) { display:block; font-size:22px; }.analogy-bridge .bridge-cookie { width:115px; height:115px; margin:auto; }.bridge-photo { width:170px; height:115px; margin:auto; object-fit:cover; }.opening-inference .equation { margin:40px 0 0; }.opening-takeaway { font-size:30px; margin-top:35px!important; }.compact-bridge .pipeline { margin-top:20px; }.compact-bridge .pipeline .symbol { font-size:28px; }.compact-bridge .pipeline .experiment { font-size:22px; padding:10px 14px; }.compact-bridge .pipeline .caption { font-size:15px; margin-top:8px; }.compact-bridge .opening-takeaway { display:none; }
 .slidev-vclick-target { transition:opacity .18s ease; }
 @media (prefers-reduced-motion:reduce){.slidev-vclick-target{transition:none}.opening-illustration circle:has(animateMotion){display:none}}
 .derivation{height:430px}.circuit-strip{display:flex;align-items:center;justify-content:center;gap:28px;margin:35px auto 28px;font-size:27px}.circuit-strip span{border:2px solid var(--teal);padding:16px 24px}.derivation-eq{font-size:31px;text-align:center;margin:25px 0}.derivation-answer{font-size:39px;text-align:center;color:var(--teal);margin-top:30px}.derivation-answer small{display:block;font-size:19px;color:var(--muted);margin-top:12px}.bit-readout{text-align:center;font-size:28px}.protocol-grid,.ghz-grid,.comparison-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center}.protocol-grid img,.ghz-grid img{display:block;width:100%;max-height:355px;object-fit:contain}.ghz-grid{grid-template-columns:1.15fr .85fr}.ghz-grid .derivation-eq{font-size:25px}.comparison-grid{grid-template-columns:1.35fr .65fr}.comparison-grid img{display:block;width:100%;height:390px;object-fit:contain}.comparison-label{text-align:center;font-size:27px;margin:34px 0}.comparison-label b{display:block;font-size:36px;margin:9px}.comparison-label small{display:block;color:var(--muted);font-size:18px;margin-top:8px}
@@ -38,4 +38,135 @@ body,.slidev-layout { background:var(--paper); color:var(--ink); }
 .backup-table{width:100%;border-collapse:collapse;font-size:20px;line-height:1.23;margin-top:12px}.backup-table th{background:#e6eeee;color:var(--ink);font-weight:600}.backup-table th,.backup-table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:center}.backup-table th:first-child,.backup-table td:first-child{text-align:left}.backup-table small{display:block;color:var(--muted);font-size:15px;margin-top:3px}.backup-table .highlight td{color:var(--teal);font-weight:600}.table-note{text-align:center!important;color:var(--muted);font-size:16px!important;margin-top:15px!important}.ratio-table,.precision-table{font-size:18px}.ratio-table th,.ratio-table td,.precision-table th,.precision-table td{padding:9px 8px}.diagnostics-table{font-size:17px}.diagnostics-table th,.diagnostics-table td{padding:12px 6px}.downstream-table{font-size:18px}.detector-table{font-size:20px;margin-top:35px}.detector-notes{text-align:center;color:var(--muted);font-size:18px;margin-top:28px}.detector-notes .math-eq{display:block;color:var(--ink);font-size:26px;margin-bottom:8px}.parameter-table{margin-top:55px;font-size:20px}.parameter-table code{font-size:16px;color:var(--ink)}
 .naive-rule{display:flex!important;align-items:center;justify-content:center;gap:24px;margin:0 auto!important;font-size:25px!important}.naive-rule span{color:var(--muted);margin-right:0!important}.naive-rule .math-eq{display:block!important;font-size:24px}
 .slide-citations{position:absolute;left:65px;right:65px;bottom:7px;display:flex;justify-content:flex-end;gap:14px;color:var(--muted);font-size:11px;line-height:1.15;white-space:nowrap}.slide-citations span{display:inline-block}.references-slide{padding-top:78px}.references-slide>h1{font-size:40px;margin-bottom:15px}.reference-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:30px;row-gap:8px}.reference-entry{display:grid;grid-template-columns:25px 1fr;gap:5px;font-size:12.5px;line-height:1.2;color:var(--ink)}.reference-entry b{color:var(--teal)}.reference-entry i{font-style:italic}.reference-provenance{position:absolute;left:65px;right:65px;bottom:10px;text-align:center;color:var(--muted);font-size:11px!important}
-.generated-source{position:absolute;bottom:31px;left:65px;color:var(--muted);font-size:12px!important}.latex-crop-slide{padding-top:62px}.latex-crop-slide img{display:block;width:100%;height:575px;object-fit:contain;margin:0 auto}.thesis-figure-slide img{display:block;width:100%;height:505px;object-fit:contain;margin:0 auto}.thesis-figure-slide>h1{font-size:35px;margin-bottom:8px}
+.generated-source{position:absolute;bottom:31px;left:65px;color:var(--muted);font-size:12px!important}.latex-crop-slide{padding:52px 20px 14px}.latex-crop-slide .supp-tag{left:20px;top:22px}.latex-crop-slide img{display:block;width:100%;height:648px;object-fit:contain;margin:0 auto}.thesis-figure-slide img{display:block;width:100%;height:505px;object-fit:contain;margin:0 auto}.thesis-figure-slide>h1{font-size:35px;margin-bottom:8px}
+
+/* --- critique pass: opening trig law, centred probe symbol --- */
+.pole-law{position:absolute;left:56%;top:6%;width:43%;text-align:center}
+.pole-law .equation{font-size:29px;margin:26px 0}
+.analogy-bridge .pipeline .experiment .probe-symbol{display:block;text-align:center;font-size:30px;margin-top:12px}
+
+/* --- critique pass: derivation slides --- */
+.derivation-cols{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:start;margin-top:14px}
+.derivation-cols .derivation-eq{font-size:26px;margin:14px 0}
+.derivation-cols .derivation-answer{font-size:34px;margin-top:20px}
+.derivation-aside{border-left:2px solid var(--line);padding-left:26px;color:var(--muted);font-size:20px}
+.derivation-aside .math-eq{display:block;margin:14px 0}
+.derivation-note{font-size:21px;color:var(--muted);text-align:center;margin-bottom:6px}
+.protocol-grid .derivation-eq,.ghz-grid .derivation-eq{font-size:23px;margin:14px 0}
+.protocol-grid .derivation-answer,.ghz-grid .derivation-answer{font-size:29px;margin-top:20px}
+.one-qubit>img{display:block;width:62%;max-height:150px;object-fit:contain;margin:0 auto}
+.comparison-label b{font-size:28px}
+
+/* --- critique pass: QCRB and numerical-verification slides --- */
+.qcrb{margin-top:26px}
+.qcrb h3{margin-bottom:4px}
+.qcrb .equation{margin:14px 0}
+.qcrb .lead{font-size:28px;margin-top:22px!important}.qcrb .lead .math{font-size:32px}
+.verify-figure{display:block;width:100%;max-height:520px;object-fit:contain;margin:26px auto 0}
+
+
+.overlay-view .plot{height:300px}
+.overlay-legend{display:flex;justify-content:center;gap:56px;font-size:25px;margin-top:8px!important}
+.overlay-take{margin-top:6px!important}
+
+/* --- critique pass: GHZ branch comparison stays on one line --- */
+.branch-compare{display:block;font-size:19px;color:var(--muted);margin-top:10px;white-space:nowrap}
+.branch-compare .math-eq{display:inline}
+
+/* the legend colours must survive KaTeX's own colour handling */
+.overlay-legend .math{color:inherit}
+
+/* --- the concrete game: compact parameter line, figure takes the rest --- */
+.game-line{margin:0 0 6px!important;font-size:28px}
+.game-line .math{margin:0 2px}
+
+/* --- second critique pass --- */
+.task-list{list-style:none;margin:26px auto 0;padding:0;max-width:1010px}
+.task-list li{position:relative;font-size:26px;line-height:1.5;margin:16px 0;padding-left:34px}
+.task-list li::before{content:"";position:absolute;left:0;top:14px;width:16px;height:3px;background:var(--teal)}
+.task-list .tag{font-size:21px;white-space:nowrap}
+.recap{margin-top:70px;text-align:center}
+.recap p{font-size:29px;margin:22px 0;color:var(--muted)}
+.recap .recap-punch{font-size:35px;color:var(--teal);margin-top:46px}
+.beat-list{list-style:none;margin:22px auto 0;padding:0;max-width:960px}
+.beat-list li{position:relative;font-size:22px;line-height:1.45;margin:11px 0;padding-left:28px;color:var(--muted)}
+.beat-list li::before{content:"";position:absolute;left:0;top:11px;width:13px;height:3px;background:var(--teal)}
+.beat-list b{color:var(--ink);font-weight:600}
+.safeguard-defs{position:absolute;right:58px;top:96px;width:430px}
+.safeguard-defs p{font-size:19px;margin:12px 0;color:var(--muted)}
+.safeguard-defs .punch{color:var(--teal);font-size:21px;margin-top:20px}
+.summary-list{list-style:none;margin:20px auto 0;padding:0;max-width:1010px}
+.summary-list>li{position:relative;font-size:26px;line-height:1.45;margin:18px 0;padding-left:32px}
+.summary-list>li::before{content:"";position:absolute;left:0;top:14px;width:15px;height:3px;background:var(--teal)}
+.summary-list ul{list-style:none;margin:8px 0 0;padding:0}
+.summary-list ul li{font-size:21px;color:var(--muted);margin:5px 0;padding-left:22px;position:relative}
+.summary-list ul li::before{content:"\2013";position:absolute;left:0;color:var(--muted)}
+.thanks{text-align:center;font-size:33px;color:var(--teal);margin-top:40px!important}
+.outlook-list{list-style:none;margin:14px 0 0;padding:0}
+.outlook-list li{position:relative;font-size:21px;line-height:1.4;margin:13px 0;padding-left:26px;color:var(--muted)}
+.outlook-list li::before{content:"";position:absolute;left:0;top:10px;width:12px;height:3px;background:var(--teal)}
+.outlook-list b{color:var(--ink);font-weight:600}
+.diag-table{margin:26px auto 0;border-collapse:collapse;font-size:22px}
+.diag-table th,.diag-table td{padding:11px 26px;text-align:right}
+.diag-table th:first-child,.diag-table td:first-child{text-align:left}
+.diag-table thead th{font-weight:600;font-size:19px;color:var(--muted);border-bottom:2px solid var(--line)}
+.diag-table tbody tr+tr td{border-top:1px solid var(--line)}
+.diag-table .good{color:var(--teal)}
+.diag-table .bad{color:var(--red)}
+.memory,.scenario{line-height:1.5}
+
+/* --- fitting the reworked slides --- */
+.task-list,.beat-list,.summary-list,.summary-list ul,.outlook-list{list-style:none!important}
+.task-list li,.beat-list li,.summary-list>li,.outlook-list li{list-style:none!important}
+.slidev-layout:has(.task-slide)>h1{margin-bottom:6px}
+.task-slide .task-list{margin-top:12px}
+.task-slide .task-list{margin-top:6px}.task-slide .task-list li{font-size:21px;margin:8px 0}
+.task-slide{--figure-height:368px}
+
+.one-shot .one-shot-law{font-size:20px}
+.slidev-layout:has(.precision-slide)>h1{margin-bottom:8px}
+.precision-slide .verify-figure{max-height:382px!important;margin-top:8px}
+.precision-slide .beat-list{margin-top:10px}
+.precision-slide .beat-list li{font-size:20px;margin:7px 0}
+.diag-slide .diag-table{margin-top:18px;font-size:20px}
+.diag-slide .diag-table th,.diag-slide .diag-table td{padding:8px 22px}
+.search-slide{--figure-height:250px}
+.search-evolution{margin-top:10px}
+
+
+.catch-slide .replacement{height:318px}
+.catch-slide .plot{height:300px}
+.catch-slide .lead{font-size:24px;margin-top:10px!important}
+.catch-slide .callout{font-size:31px;margin-top:4px!important}
+.walk-slide .replacement{height:330px}
+.walk-slide .plot{height:318px}
+.walk-slide .lead{font-size:23px;margin-top:4px!important}
+.brute-slide .axis-diagram{height:236px;margin-top:2px}
+.brute-slide .callout{font-size:32px;margin-top:2px!important}
+.brute-slide .beat-list{margin-top:16px}
+.brute-slide .beat-list li{font-size:19px;margin:6px 0;line-height:1.35}
+
+/* --- multi-line thesis derivations --- */
+.derivation-gate{text-align:center;margin:10px 0 6px;font-size:23px}
+.one-qubit>img{display:block;width:48%;max-height:100px;object-fit:contain;margin:0 auto}
+.separable-derivation>img{display:block;width:44%;max-height:126px;object-fit:contain;margin:0 auto 2px}.ghz-derivation>img{display:block;width:54%;max-height:120px;object-fit:contain;margin:0 auto 2px}
+.one-qubit{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.one-qubit .derivation-main{display:flex;flex-direction:column}
+.one-qubit .derivation-answers{display:flex;flex-direction:column;gap:8px;justify-content:center}
+.one-qubit .bit-readout{font-size:23px}
+.separable-derivation,.ghz-derivation{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start}
+.derivation-figure{display:flex;align-items:center;justify-content:center}
+.derivation-figure img{width:100%;max-height:280px;object-fit:contain}
+.derivation-content{display:flex;flex-direction:column;justify-content:center}
+.ghz-derivation .derivation-gate{margin-bottom:8px}
+.one-qubit .derivation-answer,.separable-derivation .derivation-answer,
+.ghz-derivation .derivation-answer{font-size:28px}
+.derivation .derivation-answer small{display:block;font-size:17px;color:var(--muted);margin-top:5px}.derivation-gate{margin:8px 0 4px!important}
+.sequential-derivation>img{display:block;width:56%;max-height:120px;object-fit:contain;margin:0 auto 8px}
+
+/* --- pipeline: the boxed experiment is taller than a bare symbol, so the
+       body sits in a fixed-height row and every caption shares a baseline --- */
+.pipeline{align-items:flex-start}
+.pipeline .arrow{align-self:flex-start;margin-top:calc(var(--node-h,120px)/2 - 22px)}
+.pipeline .node-body{height:var(--node-h,120px);display:flex;align-items:center;justify-content:center}
+.analogy-bridge .pipeline{--node-h:118px}

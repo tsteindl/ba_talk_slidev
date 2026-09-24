@@ -124,6 +124,6 @@ const items = keys.map(key => {
   return `<div class="reference-entry"><b>[${ref.number}]</b><span>${escapeHtml(ref.full).replaceAll('&lt;i&gt;', '<i>').replaceAll('&lt;/i&gt;', '</i>')}</span></div>`
 }).join('\n')
 const hash = createHash('sha256').update(bibText).digest('hex')
-const page = `---\nclass: references-slide\n---\n\n<div class="supp-tag">REFERENCES</div>\n\n# References\n\n<div class="reference-grid">\n${items}\n</div>\n\n<p class="reference-provenance">Generated from the thesis bibliography · ${keys.length} cited works · source SHA-256 ${hash.slice(0, 12)}</p>\n`
+const page = `---\nclass: references-slide\n---\n\n<div class="supp-tag">REFERENCES</div>\n\n# References\n\n<div class="reference-grid">\n${items}\n</div>\n`
 writeFileSync(resolve(root, 'pages', 'references.generated.md'), page, 'utf8')
 console.log(`Generated citations for ${Object.keys(groups).length} slides and ${keys.length} references`)
