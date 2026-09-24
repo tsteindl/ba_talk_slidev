@@ -7,7 +7,7 @@ class: supplement supplement-divider
 
 # Backup slides
 
-<p>exact statements, pseudocode, tables and figures from the thesis</p>
+<p></p>
 
 ---
 class: supplement

@@ -71,8 +71,7 @@ const pct = v => (100 * v).toFixed(1) + '%'
         <text :x="xs(t)" :y="TOP + GAP + 66" text-anchor="middle" class="tick">{{ t }}</text>
       </template>
       <text :x="(L + R) / 2" :y="TOP + GAP + 94" text-anchor="middle" class="axis-name">
-        N<tspan dy="5" class="sub">guess</tspan><tspan dy="-5"> / N</tspan><tspan
-          dy="5" class="sub">opt</tspan><tspan dy="-5"> · box 10–90%, bar 1–99% · all 106 operating points</tspan>
+        N<tspan dy="5" class="sub">guess</tspan><tspan dy="-5"> / N</tspan>
       </text>
     </svg>
   </div>
