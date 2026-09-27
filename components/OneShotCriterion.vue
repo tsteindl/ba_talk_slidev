@@ -42,7 +42,7 @@ const xs = v => L + (v - lo.value) / (hi.value - lo.value) * (R - L)
 const ys = d => B - d * (B - T)
 const bell = v => Math.exp(-0.5 * ((v - PHI_P) / sigma.value) ** 2)
 
-const stage = computed(() => Math.min(3, props.clicks))
+const stage = computed(() => Math.min(4, props.clicks))
 
 const shotsOn = computed(() => props.probes.map(p => {
   const value = phiHat(p.N, p.hits), phi1 = threshold(p.N)
@@ -72,7 +72,7 @@ const fmt = v => v.toFixed(4)
   <div class="one-shot">
     <svg viewBox="0 0 1050 372" role="img"
          aria-label="Sampling distribution of the probe under test around the pilot estimate, with its five percent rejection threshold and the probes that were accepted or rejected">
-      <path v-if="stage >= 2" :d="tail" class="tail" />
+      <path v-if="stage >= 3" :d="tail" class="tail" />
       <path :d="curve" class="bell" />
       <line :x1="L" :y1="B" :x2="R" :y2="B" class="axis" />
 
@@ -85,7 +85,7 @@ const fmt = v => v.toFixed(4)
         <tspan :x="xs(PHI_P) + 96" dy="24" class="law-sub"></tspan>
       </text>
 
-      <g v-if="stage >= 2" class="thresholds">
+      <g v-if="stage >= 3" class="thresholds">
         <line :x1="xs(mainCut)" :y1="ys(bell(mainCut))" :x2="xs(mainCut)" :y2="B" class="threshold" />
         <text :x="xs(mainCut) - 14" :y="ys(0.70)" text-anchor="end" class="threshold-tag">
           φ<tspan dy="6" class="sub">1</tspan><tspan dy="-6"> = {{ fmt(mainCut) }}</tspan>
@@ -96,25 +96,23 @@ const fmt = v => v.toFixed(4)
       </g>
 
       <template v-for="(s, i) in shotsOn" :key="s.N">
-        <g v-if="stage >= 1 || i === 0" :class="['probe-group', { bad: stage >= 3 && s.rejected }]">
+        <g v-if="stage >= i" :class="['probe-group', { bad: stage >= 4 && s.rejected }]">
           <circle :cx="s.x" :cy="B" r="7" class="probe" />
           <text :x="s.x" :y="B + 26" text-anchor="middle" class="probe-tag">
             φ̂<tspan dy="5" class="sub">{{ s.N }}</tspan>
           </text>
-          <text v-if="stage >= 3" :x="s.x" :y="B + 50" text-anchor="middle" class="mark">
+          <text v-if="stage >= 4" :x="s.x" :y="B + 50" text-anchor="middle" class="mark">
             {{ s.rejected ? '✗' : '✓' }}
           </text>
         </g>
       </template>
     </svg>
 
-    <p class="one-shot-law">
-      <span v-if="stage < 2">pilot at <b>N₀ = N<sub>min</sub> = {{ N0 }}</b>, <b>m₀ = {{ M0 }}</b> shots
-        · safe depth here is <b>N ≤ {{ N_OPT }}</b></span>
-      <span v-else>reject when probe lands below
-        φ₁ = F⁻¹(α), for inverse CDF F⁻¹, α = {{ ALPHA }}</span>
-    </p>
-    <p v-if="caption" class="one-shot-caption">{{ caption }}</p>
+    <p class="one-shot-law">pilot at <b>N₀ = N<sub>min</sub> = {{ N0 }}</b>, <b>m₀ = {{ M0 }}</b> shots
+      · safe depth here is <b>N ≤ {{ N_OPT }}</b></p>
+    <p v-if="stage >= 3" class="one-shot-law" style="margin-top:8px!important">reject when probe lands below
+      φ₁ = F⁻¹(α), for inverse CDF F⁻¹, α = {{ ALPHA }}</p>
+    <p v-if="caption && stage >= 4" class="one-shot-caption">{{ caption }}</p>
   </div>
 </template>
 

@@ -66,8 +66,6 @@ const TRUE_PHI = D.binary.phi
         <line :x1="L" :y1="py(TRUE_PHI)" :x2="R" :y2="py(TRUE_PHI)" class="truth" />
         <text :x="R" :y="py(TRUE_PHI) - 9" text-anchor="end" class="tick">true φ</text>
         <template v-for="(p, i) in probePoints" :key="i">
-          <line v-if="stage >= 2" :x1="p.x" :y1="p.lo" :x2="p.x" :y2="p.hi"
-                :class="['bar', { over: p.over }]" />
           <circle :cx="p.x" :cy="p.y" r="5" :class="['dot', { over: p.over }]" />
           <text :x="p.x" :y="B + 20" text-anchor="middle" class="tick">#{{ i + 1 }}</text>
           <text :x="p.x" :y="B + 38" text-anchor="middle" class="tick muted-tick">N={{ p.N }}</text>
@@ -99,8 +97,6 @@ const TRUE_PHI = D.binary.phi
 .axis-name{fill:var(--muted);font-size:17px}
 .dot{fill:var(--teal)}
 .dot.over{fill:var(--red)}
-.bar{stroke:var(--teal);stroke-width:3;stroke-linecap:round;opacity:.75}
-.bar.over{stroke:var(--red)}
 .verdict{font-size:20px;color:var(--muted);margin-top:10px!important}
 .verdict.accent{color:var(--teal)}
 svg text{font-family:"Aptos","Segoe UI",Arial,sans-serif}

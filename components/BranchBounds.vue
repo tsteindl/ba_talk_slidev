@@ -77,7 +77,7 @@ const fmt = n => n.toFixed(2)
 </script>
 
 <template>
-  <svg class="branch-bounds" viewBox="0 0 1050 400" role="img"
+  <svg class="branch-bounds" :class="{ 'not-shown': clicks < 1 }" viewBox="0 0 1050 400" role="img"
        aria-label="The phase interval from 0.01 to 0.1 radians mapped through N equals pi over 2 phi onto the phase-gate-use interval from 15 to 157">
     <!-- regions -------------------------------------------------------- -->
     <g class="regions" :class="{ on: drawn }">
@@ -162,7 +162,8 @@ const fmt = n => n.toFixed(2)
 
 <style scoped>
 .branch-bounds { display:block; width:100%; height:var(--figure-height,398px); overflow:visible;
-  font-family:"Aptos","Segoe UI",Arial,sans-serif; }
+  font-family:"Aptos","Segoe UI",Arial,sans-serif; transition:opacity .4s ease; }
+.branch-bounds.not-shown { opacity:0; visibility:hidden; }
 
 .axes line { stroke:#8c9fa7; stroke-width:1.8; }
 .tick { fill:var(--muted); font-size:18px; }

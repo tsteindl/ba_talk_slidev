@@ -31,8 +31,6 @@ clicks: 1
 -->
 
 ---
-clicks: 0
----
 
 # The catch: the risk of overshooting (aliasing)
 
@@ -143,16 +141,12 @@ Theory to the rescue.
 -->
 
 ---
-clicks: 3
+clicks: 4
 ---
 
 # Reject the probes that fall too far
 
 <TalkBody :number="17" :clicks="$clicks" :page="$page" />
-
-<!--
-- REALLY EXPENSIVE!!!!
--->
 
 ---
 clicks: 2
