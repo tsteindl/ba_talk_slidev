@@ -77,7 +77,7 @@ const TRUE_PHI = D.binary.phi
       </svg>
       <p class="verdict" :class="{ accent: stage >= 2 }">
         <span v-if="stage < 2">N jumps around - consecutive probes are not ordered</span>
-        <span v-else>each probe judged <b>on its own</b>, against its own <MathEq tex="\pm\sigma=1/(2N\sqrt{m})" :display="false" /></span>
+        <span v-else>each probe judged <b>on its own</b>: one-shot criterion</span>
       </p>
     </div>
   </div>

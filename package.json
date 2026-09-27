@@ -11,7 +11,7 @@
     "start": "slidev slides-main.md --host 127.0.0.1 --port 3030",
     "prestart:local": "npm run generate",
     "start:local": "slidev slides-main.md --open",
-    "main": "slidev slides-main.md --open",
+    "main": "slidev slides-main.md --remote --port 3030 --open",
     "prebuild": "npm run generate",
     "build": "slidev build slides-main.md",
     "preexport": "npm run generate",

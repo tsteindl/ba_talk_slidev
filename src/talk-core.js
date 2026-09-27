@@ -148,9 +148,13 @@ add('The task','MODEL',`<ul class="task-list"><li>from now on: the <b>entangled<
   '',70,{estimator:true,scenario:true,figure:'BranchBounds',clicks:4,className:'task-slide'});
 add('Recap: choosing N adaptively','ADAPTIVE N',`<div class="recap"><p>${m('N\\phi\\leq\\pi/2')} ⇒ only ${m('N\\leq N_{\\mathrm{opt}}=\\lfloor\\pi/(2\\phi)\\rfloor')} is usable</p><p>a fixed budget ${m('C=Nm')} rewards the largest ${m('N')} we can get away with</p><p class="recap-punch accent">we do not know ${m('N_{\\mathrm{opt}}')} — and we really must not overshoot it</p></div>`,
   'We do not know N_opt, but we really need to avoid overshooting it.',30,{estimator:true,scenario:true});
-add('Safe for every possible phase?','ADAPTIVE N',axis({markers:[{n:15,label:'safe · conservative'}]})+frag(`<p class="center callout">Brute Force</p><p class="center small muted">${m('N=N_{\\min}=15')}</p>`,0)+frag(`<p class="center small">for ${m('\\phi=0.02')}: largest safe ${m('N')} is 78 ${m('=:N_{\\mathrm{opt}}')}</p>`,1)+frag(`<ul class="beat-list"><li>the baseline algorithm — no exploration at all</li><li>from now on: <b>guess</b> ${m('N_{\\mathrm{opt}}')}, then spend the rest at ${m('N_{\\mathrm{guess}}\\approx N_{\\mathrm{opt}}')}</li></ul>`,2),
+add('Safe for every possible phase?','ADAPTIVE N',axis({markers:[{n:15,label:'safe, conservative'}]})+frag(`<p class="center callout">Brute Force</p><p class="center small muted">${m('N=N_{\\min}=15')}</p>`,0)+
+frag(`<p class="center small">
+  <!-- for ${m('\\phi=0.02')}: largest safe ${m('N')} is 78 ${m('=:N_{\\mathrm{opt}}')} -->
+  </p>`,1)
++frag(`<ul class="beat-list"><li>the baseline algorithm — no exploration at all</li><li>from now on: <b>guess</b> ${m('N_{\\mathrm{opt}}')}, then spend the rest at ${m('N_{\\mathrm{guess}}\\approx N_{\\mathrm{opt}}')}</li></ul>`,2),
   'Baseline algorithm.\n\nFrom now on: building on the GHZ protocol, try to guess N_opt in an exploration phase and use the remaining budget to guess using N_guess approx N_opt.',45,{estimator:true,scenario:true,className:'brute-slide'});
-add('Could we find the hidden boundary?','ADAPTIVE N',states([axis({markers:[15],label:'How could we find this hidden boundary?'}),axis({markers:[15,16,17,18,19,20],label:'15 → 16 → 17 → 18 → …'}),axis({markers:[15,16,17,18,19,20],label:'Can we detect when we went too far?'})])+frag('<p class="center callout">Linear Search</p>',2),
+add('Could we find the hidden boundary?','ADAPTIVE N',states([axis({markers:[15],label:''}),axis({markers:[15,16,17,18,19,20],label:'15 → 16 → 17 → 18 → …'}),axis({markers:[15,16,17,18,19,20],label:'Can we detect when we went too far?'})])+frag('<p class="center callout">Linear Search</p>',2),
   '',40,{estimator:true,scenario:true});
 add('A falling moving average signals overshoot','ADAPTIVE N',states([estimatePlot(D.linear.probes,{count:12}),estimatePlot(D.linear.probes),estimatePlot(D.linear.probes,{moving:true})]),
   '',65,{estimator:true,scenario:true,source:''});
@@ -161,14 +165,14 @@ add('Bisect the candidate interval','ADAPTIVE N',states([
   axis({range:[15,86],markers:[{n:50,label:'50 · safe'}]}),
   axis({range:[50,86],markers:[{n:68,label:'68 · safe'}]}),
   axis({range:[68,86],markers:[{n:77,label:'77 · safe'}]}),
-  axis({range:[77,86],markers:[{n:81,label:'81 · overshoot',color:red}],label:'But how do we classify a noisy probe?'})]),
+  axis({range:[77,86],markers:[{n:81,label:'81 · overshoot',color:red}],label:'But how to classify an overshoot?'})]),
   '',70,{estimator:true,scenario:true,source:''});
 add('One detector does not fit both searches','ADAPTIVE N','',
   '',40,{estimator:true,scenario:true,figure:'SearchErrorEvolution',clicks:2});
-add('A one-shot overshoot criterion','ADAPTIVE N',`<div class="center"><p class="lead accent" style="margin-top:10px!important">theory to the rescue</p><p class="small muted" style="margin-top:34px">Delta method: for large enough ${m('m')}</p>${eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\phi,\\tfrac{1}{4mN^2}\\right)')}${frag(`<p class="small muted" style="margin-top:30px">but ${m('\\phi')} is what we are after - plug in a safe, high-shot pilot ${m('\\hat\\phi_p')}</p>`+eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\hat\\phi_p,\\tfrac{1}{4mN^2}\\right)'),0)}</div>`,
+add('A one-shot overshoot criterion','ADAPTIVE N',`<div class="center"><p class="lead accent" style="margin-top:10px!important">Theory to the rescue</p><p class="small muted" style="margin-top:34px">Delta method: for large enough ${m('m')}</p>${eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\phi,\\tfrac{1}{4mN^2}\\right)')}${frag(`<p class="small muted" style="margin-top:30px">but ${m('\\phi')} is what we are after - plug in a safe, high-shot pilot ${m('\\hat\\phi_p')}</p>`+eq('\\hat\\phi_N\\;\\approx\\;\\mathcal N\\!\\left(\\hat\\phi_p,\\tfrac{1}{4mN^2}\\right)'),0)}</div>`,
   'Galton board!!!\n\nTheory to the rescue.',45,{estimator:true,scenario:true,clicks:1});
 add('Reject the probes that fall too far','ADAPTIVE N','',
-  '',50,{estimator:true,scenario:true,figure:'OneShotCriterion',clicks:3,figureProps:{probes:[{N:16,hits:14},{N:30,hits:0},{N:36,hits:1}],shots:30,caption:'N = 36 is only five past the safe depth — and the estimate has already collapsed'}});
+  '',50,{estimator:true,scenario:true,figure:'OneShotCriterion',clicks:3,figureProps:{probes:[{N:16,hits:14},{N:30,hits:0},{N:36,hits:1}],shots:30,caption:'N = 36 has already collapsed'}});
 add('Do we need to search at all?','ADAPTIVE N',`<div class="center">${eq('N=15\\longrightarrow\\hat\\phi_0')}${eq('N_{\\mathrm{opt}}=\\left\\lfloor\\frac{\\pi}{2\\phi}\\right\\rfloor')}${frag(eq('N_{\\mathrm{guess}}=\\left\\lfloor\\frac{\\pi}{2\\hat\\phi_0}\\right\\rfloor'),0)}${frag('<p class="callout accent">Reverse Engineering</p>',1)}</div>`,
   'Assumes again phi0-hat approx phi.',55,{estimator:true,scenario:true});
 add('Problem: exploration has uncertainty too','ADAPTIVE N',`<p class="center small muted" style="margin-top:6px">the ${m('N_{\\mathrm{guess}}')} that exploration hands over is itself an estimate</p>`,

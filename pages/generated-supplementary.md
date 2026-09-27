@@ -173,7 +173,7 @@ class: supplement latex-crop-slide
 <img src="/assets/backup-latex/table-03-01.png" alt="Table 3.1:">
 
 <!--
-Re-typeset for the talk from the thesis table generator, short caption, same Latin Modern font. Values are the generator's, unchanged.
+rightmost part shows deviation between exact binomial cutoff and gaussian approximation
 -->
 
 ---

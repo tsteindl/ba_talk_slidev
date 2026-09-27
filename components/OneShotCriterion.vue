@@ -109,9 +109,9 @@ const fmt = v => v.toFixed(4)
     </svg>
 
     <p class="one-shot-law">
-      <span v-if="stage < 2">pilot at <b>N₀ = N<sub>min</sub> = {{ N0 }}</b>, <b>m₀ = {{ M0 }}</b> shots ·
-        each probe <b>m′ = {{ shots }}</b> shots · safe depth here is <b>N ≤ {{ N_OPT }}</b></span>
-      <span v-else>reject when the probe lands below
+      <span v-if="stage < 2">pilot at <b>N₀ = N<sub>min</sub> = {{ N0 }}</b>, <b>m₀ = {{ M0 }}</b> shots
+        · safe depth here is <b>N ≤ {{ N_OPT }}</b></span>
+      <span v-else>reject when probe lands below
         φ₁ = F⁻¹(α), for inverse CDF F⁻¹, α = {{ ALPHA }}</span>
     </p>
     <p v-if="caption" class="one-shot-caption">{{ caption }}</p>

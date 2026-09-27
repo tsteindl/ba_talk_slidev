@@ -105,9 +105,9 @@ const fmt = n => n.toFixed(2)
     <path ref="curve" :d="curvePath" class="boundary"
           :style="{ strokeDasharray: curveLength, strokeDashoffset: drawn ? 0 : curveLength }" />
     <g class="boundary-label" :class="{ on: drawn && stage < 4 }">
-      <text :x="515" :y="240" class="note">N is safe exactly while Nφ ≤ π/2</text>
+      <text :x="515" :y="240" class="note">N is safe iff Nφ ≤ π/2</text>
       <text :x="515" :y="268" class="formula">N = π / (2φ)</text>
-      <text :x="xs(0.1085)" :y="ys(128)" text-anchor="end" class="note danger">aliasing</text>
+      <text :x="xs(0.1085)" :y="ys(128)" text-anchor="end" class="note danger"></text>
     </g>
 
     <!-- the prior interval on the phase axis ---------------------------- -->
