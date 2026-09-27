@@ -113,7 +113,7 @@ body,.slidev-layout { background:var(--paper); color:var(--ink); }
 .outlook-list b{color:var(--ink);font-weight:600}
 .diag-table{margin:26px auto 0;border-collapse:collapse;font-size:22px}
 .diag-table th,.diag-table td{padding:11px 26px;text-align:right}
-.diag-table th:first-child,.diag-table td:first-child{text-align:left}
+.diag-table th:first-child,.diag-table td:first-child{text-align:left;width:230px}
 .diag-table thead th{font-weight:600;font-size:19px;color:var(--muted);border-bottom:2px solid var(--line)}
 .diag-table tbody tr+tr td{border-top:1px solid var(--line)}
 .diag-table .good{color:var(--teal)}
@@ -146,6 +146,7 @@ body,.slidev-layout { background:var(--paper); color:var(--ink); }
 .walk-slide .replacement{height:330px}
 .walk-slide .plot{height:318px}
 .walk-slide .lead{font-size:23px;margin-top:4px!important}
+.boundary-slide .replacement{height:270px}
 .brute-slide .axis-diagram{height:236px;margin-top:2px}
 .brute-slide .callout{font-size:32px;margin-top:2px!important}
 .brute-slide .beat-list{margin-top:16px}

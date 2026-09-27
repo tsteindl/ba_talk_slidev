@@ -31,6 +31,8 @@ clicks: 1
 -->
 
 ---
+clicks: 1
+---
 
 # The catch: the risk of overshooting (aliasing)
 
@@ -141,7 +143,7 @@ Theory to the rescue.
 -->
 
 ---
-clicks: 4
+clicks: 3
 ---
 
 # Reject the probes that fall too far
