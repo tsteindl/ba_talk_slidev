@@ -23,7 +23,7 @@ function cropSlides(kind, tag) {
 const theorems = JSON.parse(readFileSync(resolve(root, 'sources', 'theorem-crops.json'), 'utf8'))
 for (const item of theorems.filter(t => t.label !== 'fact:sql-vs-hl')) {
   const name = `${item.kind} ${item.number}${item.title ? ' \u2014 ' + item.title : ''}`
-  slides.push(`---\nclass: supplement latex-crop-slide\n---\n\n<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>\n\n<img src="/assets/backup-latex/${item.file}" alt="${name}">${(item.cites || []).length ? '\n\n<SlideCite id="supp-theorem-pilot" />' : ''}`)
+  slides.push(`---\nclass: supplement latex-crop-slide\n---\n\n<div class="supp-tag">SUPPLEMENT </div>\n\n<img src="/assets/backup-latex/${item.file}" alt="${name}">${(item.cites || []).length ? '\n\n<SlideCite id="supp-theorem-pilot" />' : ''}`)
 }
 
 divider('Algorithms pseudocode')
@@ -48,7 +48,7 @@ const titles = {
 divider('Thesis figures')
 for (const filename of readdirSync(resolve(root, 'public', 'assets', 'thesis')).filter(name => name.endsWith('.png')).sort()) {
   if (used.has(filename)) continue
-  slides.push(`---\nclass: supplement thesis-figure-slide\n---\n\n<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>\n\n# ${titles[filename] || filename}\n\n<img src="/assets/thesis/${filename}" alt="${titles[filename] || filename}">`)
+  slides.push(`---\nclass: supplement thesis-figure-slide\n---\n\n<div class="supp-tag">SUPPLEMENT </div>\n\n# ${titles[filename] || filename}\n\n<img src="/assets/thesis/${filename}" alt="${titles[filename] || filename}">`)
 }
 
 writeFileSync(resolve(root, 'pages', 'generated-supplementary.md'), slides.join('\n\n') + '\n', 'utf8')

@@ -143,7 +143,7 @@ Theory to the rescue.
 -->
 
 ---
-clicks: 3
+clicks: 4
 ---
 
 # Reject the probes that fall too far

@@ -2,7 +2,7 @@
 class: supplement latex-crop-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 <img src="/assets/backup-latex/theorem-thm-qcrb.png" alt="Theorem 2.5.1 — QFI bound for an error-propagation estimator">
 
@@ -10,7 +10,7 @@ class: supplement latex-crop-slide
 class: supplement latex-crop-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 <img src="/assets/backup-latex/theorem-thm-delta-method.png" alt="Theorem 2.6.2 — Delta Method">
 
@@ -18,7 +18,7 @@ class: supplement latex-crop-slide
 class: supplement latex-crop-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 <img src="/assets/backup-latex/theorem-lemma-asymp-dist-est.png" alt="Lemma 2.6.3 — Asymptotic distribution of the entangled estimator">
 
@@ -26,7 +26,7 @@ class: supplement latex-crop-slide
 class: supplement latex-crop-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 <img src="/assets/backup-latex/theorem-thm-asympt-dist-given-pilot.png" alt="Theorem 3.2.1">
 
@@ -36,7 +36,7 @@ class: supplement latex-crop-slide
 class: supplement latex-crop-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; LATEX STATEMENT</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 <img src="/assets/backup-latex/theorem-thm-stat-safeguard.png" alt="Theorem 3.2.2">
 
@@ -344,7 +344,7 @@ class: supplement supplement-divider
 class: supplement thesis-figure-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 # Algorithm diagnostics
 
@@ -354,7 +354,7 @@ class: supplement thesis-figure-slide
 class: supplement thesis-figure-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 # Estimator error and variance
 
@@ -364,7 +364,7 @@ class: supplement thesis-figure-slide
 class: supplement thesis-figure-slide
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; THESIS FIGURE</div>
+<div class="supp-tag">SUPPLEMENT </div>
 
 # Convergence versus budget
 

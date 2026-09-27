@@ -96,12 +96,13 @@ const fmt = v => v.toFixed(4)
       </g>
 
       <template v-for="(s, i) in shotsOn" :key="s.N">
-        <g v-if="stage >= i" :class="['probe-group', { bad: stage >= 4 && s.rejected }]">
+        <g v-if="stage >= i" :class="['probe-group', { bad: s.rejected && stage >= 4 }]">
           <circle :cx="s.x" :cy="B" r="7" class="probe" />
-          <text :x="s.x" :y="B + 26" text-anchor="middle" class="probe-tag">
+          <text :x="s.x" :y="B + 26" text-anchor="middle" class="probe-tag"
+                :class="{ strike: s.rejected && stage >= 4 }">
             φ̂<tspan dy="5" class="sub">{{ s.N }}</tspan>
           </text>
-          <text v-if="stage >= 4" :x="s.x" :y="B + 50" text-anchor="middle" class="mark">
+          <text v-if="stage >= (s.rejected ? 4 : 3)" :x="s.x" :y="B + 50" text-anchor="middle" class="mark">
             {{ s.rejected ? '✗' : '✓' }}
           </text>
         </g>
@@ -135,6 +136,7 @@ const fmt = v => v.toFixed(4)
 .mark{fill:var(--teal);font-size:22px}
 .probe-group.bad .probe,.probe-group.bad .mark{fill:var(--red)}
 .probe-group.bad .probe-tag{fill:var(--red)}
+.probe-tag.strike{text-decoration:line-through}
 .sub{font-size:14px !important}
 .one-shot-law{text-align:center;font-size:20px;color:var(--muted);margin-top:2px!important}
 .one-shot-caption{text-align:center;font-size:21px;color:var(--teal);margin-top:10px!important}

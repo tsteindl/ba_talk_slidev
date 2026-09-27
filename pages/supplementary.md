@@ -13,7 +13,7 @@ class: supplement supplement-divider
 class: supplement
 ---
 
-<div class="supp-tag">SUPPLEMENT &middot; DERIVATION</div>
+<div class="supp-tag">SUPPLEMENT</div>
 
 # The sequential protocol
 
